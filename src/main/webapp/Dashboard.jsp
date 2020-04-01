@@ -1,0 +1,688 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<jsp:include page="Contents/DashboardGeneralHeader.jsp" />
+<%@page import="queryLibrary.Queries"%>
+<%@page import="connectionFactory.Connections"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*"%>
+<%
+   ResultSet resultset = null;
+   %>
+<script>
+         $(document).ready(function() {        	
+         
+        	 // get application name
+         $('#applicationName').change(function(event) {	
+                 var applicationname = $("select#applicationName").val();
+                 
+                 $.get('PageController', {
+                	 ApplicationName : applicationname
+                 }, function(response) {
+         
+                 var select = $('#page');
+                 select.find('option').remove();
+                   $.each(response, function(index, value) {
+                   $('<option>').val(index).text(value).appendTo(select);
+               });
+                 });
+                 });
+           
+         // Get the Test Scenerio of choosen state
+         $('#page').click(function(event) {
+         	    var pageNO = $("select#page").val();
+         	    //alert(pageNO);
+         	    $.get('TestCaseController', {
+         	            pgNo : pageNO
+         	    }, function(response) {
+         	
+         	    var select = $('#testCases');
+         	    select.find('option').remove();
+         	      $.each(response, function(index, value) {
+         	      $('<option>').val(index).text(value).appendTo(select);
+         	  });
+         	    });
+             });
+         });
+      </script>
+
+
+
+
+<!--sidebar start-->
+<!-- <aside> -->
+<div id="sidebar" style="visibility: visible;" class="">
+	<!-- sidebar menu start-->
+	<ul class="sidebar-menu" id="nav-accordion">
+		<p class="centered">
+			<a href="performance.jsp"><img width="190" height="110"
+				src="https://kitconcept.com/blog/static/lighthouse-logo-af07c4b89f3fa49c62ef529afb647ac3-3067a.png"
+				class="img-circle" width="80"></a>
+		</p>
+		<h5 class="centered">Performance LightHouse</h5>
+		<li class="mt"><a class="active" href="performance.jsp"> <i
+				class="fa fa-dashboard"></i> <span>Home</span>
+		</a></li>
+		<li class=""><a href="FAQ.jsp"> <i class="fa fa-question"></i>
+				<span>FAQ</span>
+		</a></li>
+	</ul>
+	<!-- sidebar menu end-->
+</div>
+<!-- </aside> -->
+<!--sidebar end-->
+<!-- **********************************************************************************************************************************************************
+            MAIN CONTENT
+            *********************************************************************************************************************************************************** -->
+<!--main content start-->
+<section id="main-content">
+	<section class="wrapper">
+		<div class="row">
+			<div class="col-lg-9 main-chart">
+				<!--CUSTOM CHART START -->
+				<div class="border-head" style="width: 1650px;">
+					<h3>Performance HighLights</h3>
+				</div>
+				<div class="custom-bar-chart" style="height: 400px; width: 1200px;">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Element Wise Average Loading
+							Times</div>
+						<div class="panel-body">
+							<frameset cols="30%, 40%, 30%">
+								<script type="text/javascript">
+                                    FusionCharts.ready(function() {
+                                    var revenueChart = new FusionCharts({
+                                      type: 'scrollColumn2d',
+                                      renderAt: 'charter-container',
+                                      width: '1180',
+                                      height: '330',
+                                      dataFormat: 'json',
+                                      dataSource: {
+                                        "chart": {
+                                          "theme": "fusion",
+                                          "yaxisname": "Loading Times (MiliSeconds)",
+                                          "showvalues": "1",
+                                          "placeValuesInside": "1",
+                                          "rotateValues": "1",
+                                          "valueFontColor": "#ffffff",
+                                          "numberprefix": "",
+                                          //number of visible plots
+                                          "numVisiblePlot": "15",
+                                          "showLabels": "0",
+                                          //Cosmetics
+                                          "labeldisplay": "WRAP",
+                                          "linethickness": "3",
+                                          "scrollheight": "10",
+                                          "flatScrollBars": "1",
+                                          "scrollShowButtons": "0",
+                                          "scrollColor": "#cccccc",
+                                          "showHoverEffect": "1"
+                                        },
+                                        "categories": [{
+                                          "category": [{
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            },
+                                            {
+                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
+                                            }
+                                          ]
+                                        }],
+                                        "dataset": [{
+                                          "data": [{
+                                              "value": "15"
+                                            },
+                                            {
+                                              "value": "29"
+                                            },
+                                            {
+                                              "value": "25"
+                                            },
+                                            {
+                                              "value": "26"
+                                            },
+                                            {
+                                              "value": "29"
+                                            },
+                                            {
+                                              "value": "32"
+                                            },
+                                            {
+                                              "value": "31"
+                                            },
+                                            {
+                                              "value": "31"
+                                            },
+                                            {
+                                              "value": "31"
+                                            },
+                                            {
+                                              "value": "37"
+                                            },
+                                            {
+                                              "value": "31"
+                                            },
+                                            {
+                                              "value": "31"
+                                            },
+                                            {
+                                              "value": "31"
+                                            },
+                                            {
+                                              "value": "36"
+                                            },
+                                            {
+                                              "value": "45"
+                                            },
+                                            {
+                                              "value": "33"
+                                            },
+                                            {
+                                              "value": "36"
+                                            },
+                                            {
+                                              "value": "32"
+                                            },
+                                            {
+                                              "value": "37"
+                                            },
+                                            {
+                                              "value": "38"
+                                            },
+                                            {
+                                              "value": "35"
+                                            },
+                                            {
+                                              "value": "23"
+                                            },
+                                            {
+                                              "value": "33"
+                                            },
+                                            {
+                                              "value": "38"
+                                            }
+                                          ]
+                                        }]
+                                      }
+                                    });
+                                    
+                                    revenueChart.render();
+                                    });
+                                    
+                                 </script>
+								<div style="width: 1000px" id="charter-container"></div>
+							</frameset>
+						</div>
+					</div>
+				</div>
+				<!--custom chart end-->
+				<!-- /row -->
+			</div>
+			<!-- /col-lg-9 END SECTION MIDDLE -->
+			<!-- **********************************************************************************************************************************************************
+                     RIGHT SIDEBAR CONTENT
+                     *********************************************************************************************************************************************************** -->
+			<div class="col-lg-3 ds"
+				style="margin-top: 85px; height: 400px; width: 388px;">
+				<!--COMPLETED ACTIONS DONUTS CHART-->
+				<div class="donut-main">
+					<h4>Reporting Criteria</h4>
+					<table>
+
+						<tr style="height: 70px;">
+							<td>
+								<div style="font-family: 'Courier New', Courier, monospace;">
+
+									Select Application:&nbsp;
+									<%
+								         try {
+								        	
+								         	Connection connection = Connections.getConnection();
+								         	Statement statement = connection.createStatement();
+								         	resultset = statement.executeQuery(Queries.askApplicationname);
+								         %>
+										<select id="applicationName" class="btn btn-default" name="ApplicationNameDTO" style="width: 250px;">
+										<option>Select Application Name</option>
+										<%
+							            	while (resultset.next()) {
+							            %>
+											<option value="<%=resultset.getString(1)%>"><%=resultset.getString(2)%></option>
+										<%
+								            }
+								            %>
+									</select>
+									<%
+								         } catch (Exception e) {
+								         	out.println("wrong entry" + e);
+								         }
+							         %>
+								</div>
+							</td>
+						</tr>
+						<span></span>
+						<tr style="height: 70px;">
+							<td>
+								<div style="font-family: 'Courier New', Courier, monospace;">
+									<b>Select Web Page</b> 
+									<select id="page" class="btn btn-default" style="width: 250px;">
+										<option value="">Select Page Name</option>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr style="height: 70px;">
+							<td>
+								<div style="font-family: 'Courier New', Courier, monospace;">
+									Select Test Cases
+									 <select id="testCases" class="js-example-basic-multiple" style="width: 350px;" name="states[]" aria-placeholder="Select Test Case">
+												<option value="">Select Test Case Name</option>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr style="height: 80px;">
+							<td><b>Select a DateRage To Get More Detailed
+									Performance Report</b>
+								<div class="input-group input-large" data-date="01/01/2014"
+									data-date-format="mm/dd/yyyy">
+									<input type="text" class="form-control dpd1" name="from"
+										placeholder="From Date"> <span
+										class="input-group-addon"></span> <input type="text"
+										class="form-control dpd2" name="to" placeholder="To Date">
+								</div></td>
+						</tr>
+
+					</table>
+				</div>
+				<!--NEW EARNING STATS -->
+				<div class="panel terques-chart">
+					<button type="submit" id="btns" type="button" onclick="showInput()"
+						; class="btn btn-warning btn-block">Get Analysis</button>
+				</div>
+				<!--new earning end-->
+			</div>
+			<!-- /col-lg-3 -->
+		</div>
+		<!-- /row -->
+	</section>
+	<div style="margin-left: 25px; margin-top: -60px;">
+		<TABLE>
+			<tr>
+				<td>
+					<div class="panel panel-primary">
+						<div class="panel-heading">Average Page Rendering Milestones</div>
+						<div class="panel-body">
+							<script type="text/javascript">
+                                 google.charts.load('current', {packages: ['corechart', 'bar']});
+                                 google.charts.setOnLoadCallback(drawBasic);
+                                 
+                                 function drawBasic() {
+                                 
+                                    var data = google.visualization.arrayToDataTable([
+                                      ['Attributes', 'Navigation Performance',],
+                                      ['Unloadevent', 136.0],
+                                      ['Redirectevent', 379.2000],
+                                      ['AppCache', 269.5000],
+                                      ['TTFB', 209.9000],
+                                      ['Processing', 1526.067],
+                                 ['Dom_Interactive', 192.6000],
+                                 ['Dom_Complete', 1526.2000],
+                                 ['Content_load', 252.6000],
+                                 ['Page_load', 152.6000]
+                                    ]);
+                                 
+                                    var options = {
+                                      chartArea: {width: '50%'},
+                                      hAxis: {
+                                        title: '',
+                                        minValue: 0
+                                      },
+                                      vAxis: {
+                                        title: ''
+                                      }
+                                    };
+                                 
+                                    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                                 
+                                    chart.draw(data, options);
+                                  }
+                              </script>
+							<div id="chart_div" style="width: 775px; height: 500px;"></div>
+						</div>
+					</div>
+				</td>
+				<td style="padding: 30px;">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Webpage Loading Times</div>
+						<div class="panel-body">
+							<script type="text/javascript">
+                                 FusionCharts.ready(function(){
+                                     var chartObj = new FusionCharts({
+                                   type: 'scrollbar2d',
+                                   renderAt: 'chart-containers',
+                                   width: '600',
+                                   height: '455',
+                                   dataFormat: 'json',
+                                                        bgcolor: 'sky',
+                                   dataSource: {
+                                       "chart": {
+                                           "theme": "fusion",
+                                           "subCaption": "",
+                                           "plottooltext": "$datavalue Miliseconds",
+                                           "YAxisname": "Webpage Loading Time(MiliSeconds)",
+                                           "XAxisname": "",
+                                       },
+                                       "categories": [{
+                                           "category": [{
+                                                   "label": "https://www.google.com/"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/el.js"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/index.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/index1.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/index2.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/indexer.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/indexX.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/dom.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/p.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/json.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/repo.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/mnp.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/abc.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/np.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/mango.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/orange.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/carrot.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/cts.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/tcs.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/NoWork.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/kl.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/ngp.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/pug.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/indexNN.html"
+                                               },
+                                               {
+                                                   "label": "https://www.google.com/Petrol.html"
+                                               }
+                                 
+                                           ]
+                                       }],
+                                       "dataset": [{
+                                           "data": [{
+                                                   "value": "79.4205"
+                                               },
+                                               {
+                                                   "value": "98.2197"
+                                               },
+                                               {
+                                                   "value": "62.4172"
+                                               },
+                                               {
+                                                   "value": "30.18247"
+                                               },
+                                               {
+                                                   "value": "36.5028"
+                                               },
+                                               {
+                                                   "value": "98.4878"
+                                               },
+                                               {
+                                                   "value": "29.1784"
+                                               },
+                                               {
+                                                   "value": "11.733"
+                                               },
+                                               {
+                                                   "value": "12.215"
+                                               },
+                                               {
+                                                   "value": "13.8161"
+                                               },
+                                               {
+                                                   "value": "70.888"
+                                               },
+                                               {
+                                                   "value": "77.519"
+                                               },
+                                               {
+                                                   "value": "69.395"
+                                               },
+                                               {
+                                                   "value": "53.1933"
+                                               },
+                                               {
+                                                   "value": "44.3888"
+                                               },
+                                               {
+                                                   "value": "34.090"
+                                               },
+                                               {
+                                                   "value": "25.5188"
+                                               },
+                                               {
+                                                   "value": "21.761"
+                                               },
+                                               {
+                                                   "value": "21.272"
+                                               },
+                                               {
+                                                   "value": "21.511"
+                                               },
+                                               {
+                                                   "value": "12..1149"
+                                               },
+                                               {
+                                                   "value": "13.996"
+                                               },
+                                               {
+                                                   "value": "12.832"
+                                               },
+                                               {
+                                                   "value": "17.422"
+                                               },
+                                               {
+                                                   "value": "12.206"
+                                               },
+                                 
+                                           ]
+                                       }]
+                                   }
+                                 }
+                                 );
+                                     chartObj.render();
+                                 });
+                              </script>
+							<div id="chart-containers" style="width: 770px; height: 500px;">FusionCharts
+								XT will load here!</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="margin-top: 10px;">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Max, Mean, Min Loading Times (for
+							the selected time period)</div>
+						<div class="panel-body">
+							<script type="text/javascript">
+                                 google.charts.load('current', {packages: ['corechart', 'bar']});
+                                 google.charts.setOnLoadCallback(drawBasic);
+                                 
+                                 function drawBasic() {
+                                 
+                                    var data = google.visualization.arrayToDataTable([
+                                      ['Attributes', 'Navigation Performance',],
+                                      ['Best', 81.750],
+                                      ['Average', 37.92000],
+                                      ['Worst', 269.5000]
+                                    ]);
+                                 
+                                    var options = {
+                                      chartArea: {width: '50%'},
+                                      hAxis: {
+                                        title: '',
+                                        minValue: 0
+                                      },
+                                      vAxis: {
+                                        title: 'Webpage Loading Times(MiliSeconds)'
+                                      }
+                                    };
+                                 
+                                    var chart = new google.visualization.ColumnChart(document.getElementById('columns_div'));
+                                 
+                                    chart.draw(data, options);
+                                  }
+                              </script>
+							<div id="columns_div" style="width: 775px; height: 475px;"></div>
+						</div>
+					</div>
+				</td>
+				<td style="padding: 30px;">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Overall Report</div>
+						<div class="panel-body">
+							<div class="donut-main">
+								<div id="barchart_values" style="width: 770px; height: 475px;"></div>
+							</div>
+							<script type="text/javascript">
+                                 google.charts.load("current", {packages:["corechart"]});
+                                 google.charts.setOnLoadCallback(drawChart);
+                                 function drawChart() {
+                                  var data = google.visualization.arrayToDataTable([
+                                    ['Genre', 'TestCases 1', 'TestCases 2', 'TestCases 3', 'TestCases 4',
+                                    'TestCases 5', 'TestCases 6', { role: 'annotation' } ],
+                                    ['TC1', 10, 24, 20, 32, 18, 5, ''],
+                                    ['TC2', 16, 22, 23, 30, 16, 9, ''],
+                                    ['TC3', 28, 19, 29, 30, 12, 13, '']
+                                  ]);
+
+                                  var options = {
+                                    width: 700,
+                                    height: 480,
+                                    legend: { position: 'top', maxLines: 3 },
+                                    bar: { groupWidth: '75%' },
+                                    isStacked: true
+                                  };
+                                 
+                                  var chart = new google.visualization.BarChart(document.getElementById('barchart_values'));
+                                   chart.draw(data, options);
+                                 }
+                              </script>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</TABLE>
+	</div>
+	<!-- </section> -->
+</section>
+<!--main content end-->
+<jsp:include page="Contents/DashboardGeneralFooter.jsp" />
