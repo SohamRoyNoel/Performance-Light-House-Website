@@ -42,7 +42,45 @@
          	  });
          	    });
              });
+         
+         $('#btns1').click(function(event) {	
+        	 
+             var applicationname = $("select#applicationName").val();
+             var pageNO = $("select#page").val();
+             var testCsNO = $("select#testCases").val();
+             var dtStart = $("input#start").val();
+             var dtEnd = $("input#end").val();
+             
+	             $.get('NavigationGraphController', {
+					appNM : applicationname, pgNo : pageNO,tcNo : testCsNO, dts : dtStart,dte : dtEnd,
+		  	    }, function(response) {
+		  	    	// alert("dick");
+		  	    	var x =response;
+		  	    	var arr = [];
+		  	    	$.each(x, function(index, value){
+		  	    	  var x = `${value}`;
+		  	    	  arr.push(x);
+		  	    	  
+		  	    	});
+		  	    	
+		  	    	// output array
+		  	    	var Nav_TTFB =arr.pop();
+		  	    	var Nav_RedirectEvent =arr.pop();
+		  	    	var Nav_ContentLoad =arr.pop();
+		  	    	var Nav_Processing =arr.pop();
+		  	    	var Nav_PageLoad =arr.pop();
+		  	    	var Nav_AppCache =arr.pop();
+		  	    	var Nav_UnloadEvent =arr.pop();
+		  	    	var Nav_DomInteractive =arr.pop();
+		  	    	var Nav_DomComplete =arr.pop();
+		  	    	
+		  	    	drawBasics(Nav_TTFB, Nav_RedirectEvent, Nav_ContentLoad, Nav_Processing, Nav_PageLoad, Nav_AppCache, Nav_UnloadEvent, Nav_DomInteractive, Nav_DomComplete);   	
+		  	    });
+             });
+         
+         
          });
+		 
       </script>
 
 
@@ -349,10 +387,9 @@
 									Performance Report</b>
 								<div class="input-group input-large" data-date="01/01/2014"
 									data-date-format="mm/dd/yyyy">
-									<input type="text" class="form-control dpd1" name="from"
-										placeholder="From Date"> <span
-										class="input-group-addon"></span> <input type="text"
-										class="form-control dpd2" name="to" placeholder="To Date">
+									<input id="start" type="text" class="form-control dpd1" name="from" placeholder="From Date">
+									<span class="input-group-addon"></span>
+									<input id="end" type="text" class="form-control dpd2" name="to" placeholder="To Date">
 								</div></td>
 						</tr>
 
@@ -360,8 +397,7 @@
 				</div>
 				<!--NEW EARNING STATS -->
 				<div class="panel terques-chart">
-					<button type="submit" id="btns" type="button" onclick="showInput()"
-						; class="btn btn-warning btn-block">Get Analysis</button>
+					<button type="submit" id="btns1" type="button" class="btn btn-warning btn-block">Get Analysis</button>
 				</div>
 				<!--new earning end-->
 			</div>
@@ -378,24 +414,38 @@
 						<div class="panel-body">
 							<script type="text/javascript">
                                  google.charts.load('current', {packages: ['corechart', 'bar']});
-                                 google.charts.setOnLoadCallback(drawBasic);
+                                 google.charts.setOnLoadCallback(drawBasics);
                                  
-                                 function drawBasic() {
+                                 function drawBasics(Nav_TTFB, Nav_RedirectEvent, Nav_ContentLoad, Nav_Processing, Nav_PageLoad, Nav_AppCache, Nav_UnloadEvent, Nav_DomInteractive, Nav_DomComplete) {
+                                	 var nvTT, nvR, nvC, nvP, nvPL, nvAC, nvUE, nvDI, nvDC = 0;
+                                	 nvTT = Nav_TTFB;nvR = Nav_RedirectEvent;nvC = Nav_ContentLoad;nvP = Nav_Processing;nvPL = Nav_PageLoad;nvAC = Nav_AppCache;nvUE = Nav_UnloadEvent;nvDI = Nav_DomInteractive;nvDC = Nav_DomComplete;
+                                 	//console.log(datam);
+                                 	var data = new google.visualization.DataTable();
+                                 	data.addColumn('string', 'col_name');
+                                 	data.addColumn('number', 'Loading Time');
+                                 	data.addRows(9);
+                                 	data.setCell(0,0,'Nav_TTFB');
+                                 	data.setCell(0,1,nvTT);
+
+                                 	data.setCell(1,0,'Nav_RedirectEvent');
+                                 	data.setCell(1,1,nvR);  
+                                 	data.setCell(2,0,'Nav_ContentLoad');
+                                 	data.setCell(2,1,nvC);  
+                                 	data.setCell(3,0,'Nav_Processing');
+                                 	data.setCell(3,1,nvP);  
+                                 	data.setCell(4,0,'Nav_PageLoad');
+                                 	data.setCell(4,1,nvPL);  
+                                 	data.setCell(5,0,'Nav_AppCache');
+                                 	data.setCell(5,1,nvAC);  
+                                 	data.setCell(6,0,'Nav_UnloadEvent');
+                                 	data.setCell(6,1,nvUE);  
+                                 	data.setCell(7,0,'Nav_DomInteractive');
+                                 	data.setCell(7,1,nvDI);  
+                                 	data.setCell(8,0,'Nav_DomComplete');
+                                 	data.setCell(8,1,nvDC);  
+                                                                  	
                                  
-                                    var data = google.visualization.arrayToDataTable([
-                                      ['Attributes', 'Navigation Performance',],
-                                      ['Unloadevent', 136.0],
-                                      ['Redirectevent', 379.2000],
-                                      ['AppCache', 269.5000],
-                                      ['TTFB', 209.9000],
-                                      ['Processing', 1526.067],
-                                 ['Dom_Interactive', 192.6000],
-                                 ['Dom_Complete', 1526.2000],
-                                 ['Content_load', 252.6000],
-                                 ['Page_load', 152.6000]
-                                    ]);
-                                 
-                                    var options = {
+                                   var options = {
                                       chartArea: {width: '50%'},
                                       hAxis: {
                                         title: '',
