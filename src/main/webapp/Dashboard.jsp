@@ -51,6 +51,7 @@
              var dtStart = $("input#start").val();
              var dtEnd = $("input#end").val();
              
+             // Navigation
 	             $.get('NavigationGraphController', {
 					appNM : applicationname, pgNo : pageNO,tcNo : testCsNO, dts : dtStart,dte : dtEnd,
 		  	    }, function(response) {
@@ -76,9 +77,30 @@
 		  	    	
 		  	    	drawBasics(Nav_TTFB, Nav_RedirectEvent, Nav_ContentLoad, Nav_Processing, Nav_PageLoad, Nav_AppCache, Nav_UnloadEvent, Nav_DomInteractive, Nav_DomComplete);   	
 		  	    });
+	             
+	          // Page Load Time
+	             $.get('PageLoadGraphController', {
+						appNM : applicationname, pgNo : pageNO,tcNo : testCsNO, dts : dtStart,dte : dtEnd,
+			  	    }, function(response) {
+			  	    	var x =response;
+			  	    	var arr = [];
+			  	    	$.each(x, function(index, value){
+			  	    	  var x = `${value}`;
+			  	    	  arr.push(x);
+			  	    	  
+			  	    	});
+			  	    	
+			  	    	// output array
+			  	    	var avg =arr.pop();
+			  	    	var min =arr.pop();
+			  	    	var max =arr.pop();
+			  	    	
+			  	    	drawBasicss(max, min, avg);   	
+			  	    });
+	          
+	          
+	            
              });
-         
-         
          });
 		 
       </script>
@@ -419,30 +441,19 @@
                                  function drawBasics(Nav_TTFB, Nav_RedirectEvent, Nav_ContentLoad, Nav_Processing, Nav_PageLoad, Nav_AppCache, Nav_UnloadEvent, Nav_DomInteractive, Nav_DomComplete) {
                                 	 var nvTT, nvR, nvC, nvP, nvPL, nvAC, nvUE, nvDI, nvDC = 0;
                                 	 nvTT = Nav_TTFB;nvR = Nav_RedirectEvent;nvC = Nav_ContentLoad;nvP = Nav_Processing;nvPL = Nav_PageLoad;nvAC = Nav_AppCache;nvUE = Nav_UnloadEvent;nvDI = Nav_DomInteractive;nvDC = Nav_DomComplete;
-                                 	//console.log(datam);
                                  	var data = new google.visualization.DataTable();
                                  	data.addColumn('string', 'col_name');
                                  	data.addColumn('number', 'Loading Time');
                                  	data.addRows(9);
-                                 	data.setCell(0,0,'Nav_TTFB');
-                                 	data.setCell(0,1,nvTT);
-
-                                 	data.setCell(1,0,'Nav_RedirectEvent');
-                                 	data.setCell(1,1,nvR);  
-                                 	data.setCell(2,0,'Nav_ContentLoad');
-                                 	data.setCell(2,1,nvC);  
-                                 	data.setCell(3,0,'Nav_Processing');
-                                 	data.setCell(3,1,nvP);  
-                                 	data.setCell(4,0,'Nav_PageLoad');
-                                 	data.setCell(4,1,nvPL);  
-                                 	data.setCell(5,0,'Nav_AppCache');
-                                 	data.setCell(5,1,nvAC);  
-                                 	data.setCell(6,0,'Nav_UnloadEvent');
-                                 	data.setCell(6,1,nvUE);  
-                                 	data.setCell(7,0,'Nav_DomInteractive');
-                                 	data.setCell(7,1,nvDI);  
-                                 	data.setCell(8,0,'Nav_DomComplete');
-                                 	data.setCell(8,1,nvDC);  
+                                 	data.setCell(0,0,'Nav_TTFB');data.setCell(0,1,nvTT);
+                                 	data.setCell(1,0,'Nav_RedirectEvent');data.setCell(1,1,nvR);  
+                                 	data.setCell(2,0,'Nav_ContentLoad');data.setCell(2,1,nvC);  
+                                 	data.setCell(3,0,'Nav_Processing');data.setCell(3,1,nvP);  
+                                 	data.setCell(4,0,'Nav_PageLoad');data.setCell(4,1,nvPL);  
+                                 	data.setCell(5,0,'Nav_AppCache');data.setCell(5,1,nvAC);  
+                                 	data.setCell(6,0,'Nav_UnloadEvent');data.setCell(6,1,nvUE);  
+                                 	data.setCell(7,0,'Nav_DomInteractive');data.setCell(7,1,nvDI);  
+                                 	data.setCell(8,0,'Nav_DomComplete');data.setCell(8,1,nvDC);  
                                                                   	
                                  
                                    var options = {
@@ -454,6 +465,7 @@
                                       vAxis: {
                                         title: ''
                                       }
+                                      
                                     };
                                  
                                     var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -666,24 +678,24 @@
                                  google.charts.load('current', {packages: ['corechart', 'bar']});
                                  google.charts.setOnLoadCallback(drawBasic);
                                  
-                                 function drawBasic() {
+                                 function drawBasicss(max, min, avg) {
                                  
-                                    var data = google.visualization.arrayToDataTable([
-                                      ['Attributes', 'Navigation Performance',],
-                                      ['Best', 81.750],
-                                      ['Average', 37.92000],
-                                      ['Worst', 269.5000]
-                                    ]);
+                                	 var maxx, minn, avgg = 0;
+                                	 maxx = max;minn = min;avgg = avg;
+                                	 
+                                 	var data = new google.visualization.DataTable();
+                                 	data.addColumn('string', 'col_name');
+                                 	data.addColumn('number', 'Best');
+                                 	data.addRows(3);
+                                 	data.setCell(0,0,'Best');data.setCell(0,1,minn);
+                                 	data.setCell(1,0,'Mean');data.setCell(1,1,avgg);  
+                                 	data.setCell(2,0,'Worst');data.setCell(2,1,maxx); 
+                                  
                                  
                                     var options = {
-                                      chartArea: {width: '50%'},
-                                      hAxis: {
-                                        title: '',
-                                        minValue: 0
-                                      },
-                                      vAxis: {
-                                        title: 'Webpage Loading Times(MiliSeconds)'
-                                      }
+                                    		width: 700,
+                                            height: 400,
+                                            bar: {groupWidth: "55%"},
                                     };
                                  
                                     var chart = new google.visualization.ColumnChart(document.getElementById('columns_div'));
@@ -691,7 +703,7 @@
                                     chart.draw(data, options);
                                   }
                               </script>
-							<div id="columns_div" style="width: 775px; height: 475px;"></div>
+							<center><div id="columns_div" style="width: 675px; height: 475px;"></div></center>
 						</div>
 					</div>
 				</td>

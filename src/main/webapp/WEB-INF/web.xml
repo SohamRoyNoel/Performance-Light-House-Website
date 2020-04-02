@@ -22,6 +22,12 @@
   	<description></description>
   	<servlet-class>controllers.moduleControllers.NavigationGraphController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>PageLoadGraphController</servlet-name>
+  	<display-name>PageLoadGraphController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.moduleControllers.PageLoadGraphController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -33,5 +39,9 @@
   <servlet-mapping>
   	<servlet-name>NavigationGraphController</servlet-name>
   	<url-pattern>/NavigationGraphController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>PageLoadGraphController</servlet-name>
+  	<url-pattern>/PageLoadGraphController</url-pattern>
   </servlet-mapping>
 </web-app>
