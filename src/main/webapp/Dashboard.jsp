@@ -178,9 +178,7 @@
                                           "showHoverEffect": "1"
                                         },
                                         "categories": [{
-                                          "category": [{
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
+                                          "category": [
                                             {
                                               "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
                                             },

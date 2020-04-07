@@ -12,7 +12,7 @@ public class Connections {
 	public static Connection getConnection() {
 
 		String ClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String IPAddr = "DESKTOP-LHLA0PA\\SQLEXPRESS;";
+		String IPAddr = "DESKTOP-LHLA0PA;";
 		String DBName="Performance";
 		String DB_URL = "jdbc:sqlserver://" + IPAddr + "DatabaseName=" + DBName + ";integratedSecurity=true" ;
 		Connection con=null;
@@ -21,6 +21,7 @@ public class Connections {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Con s " + con);
 		return con;
 	}
 

@@ -1,6 +1,15 @@
 package queryLibrary;
 
 public class Queries {
+	
+	// Security Questions
+	public static String askSecurityQuestion = "select * from [Performance].[dbo].[Security_Questions]";
+	
+	// Register an User
+	public static String registerUser() {
+		String r = "INSERT INTO [dbo].[Registration] ([Reg_ApiKEY],[Reg_Name],[Reg_Cog_Email],[Reg_Cog_ProjectName],[Reg_Password],[Reg_RecoveryQusID],[Reg_RecoveryQusANS])VALUES(?,?,?,?,?,?,?)";
+		return r;
+	}
 
 	// DropDown Queries
 	public static String askApplicationname = "select * from [Performance].[dbo].[Application_Name]";
@@ -15,15 +24,15 @@ public class Queries {
 	
 	// Page Load Event Queries
 	public static String askAveragePageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID=10 and Application_ID=7 and Page_ID=10 and convert(Date,Nav_DateTimes) between '04/01/2020' and '04/04/2020'";
+		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID="+ testCsNO+" and Application_ID="+applicationNo+" and Page_ID="+pageNO+" and convert(Date,Nav_DateTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 	public static String askMaximumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select MAX(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID=10 and Application_ID=7 and Page_ID=10 and convert(Date,Nav_DateTimes) between '04/01/2020' and '04/04/2020'";
+		String q = "select MAX(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID="+ testCsNO+" and Application_ID="+applicationNo+" and Page_ID="+pageNO+" and convert(Date,Nav_DateTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 	public static String askMinimumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID=10 and Application_ID=7 and Page_ID=10 and convert(Date,Nav_DateTimes) between '04/01/2020' and '04/04/2020'";
+		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID="+ testCsNO+" and Application_ID="+applicationNo+" and Page_ID="+pageNO+" and convert(Date,Nav_DateTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 }

@@ -43,6 +43,9 @@ public class PageLoadGraphController extends HttpServlet {
 		String askAVGloadtime = Queries.askAveragePageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
 		String askMAXloadtime = Queries.askMaximumPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
 		String askMINloadtime = Queries.askMinimumPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+		System.out.println("AVG : "+askAVGloadtime);
+		System.out.println("Max : "+askMAXloadtime);
+		System.out.println("Min : "+askMINloadtime);
 		
 		// System.out.println("query : " + askNavigation);
 		try {

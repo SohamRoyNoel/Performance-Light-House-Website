@@ -28,6 +28,18 @@
   	<description></description>
   	<servlet-class>controllers.moduleControllers.PageLoadGraphController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>RegistrationController</servlet-name>
+  	<display-name>RegistrationController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.middlewareControllers.RegistrationController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SecurityQuestions</servlet-name>
+  	<display-name>SecurityQuestions</display-name>
+  	<description></description>
+  	<servlet-class>controllers.middlewareControllers.SecurityQuestions</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -43,5 +55,13 @@
   <servlet-mapping>
   	<servlet-name>PageLoadGraphController</servlet-name>
   	<url-pattern>/PageLoadGraphController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>RegistrationController</servlet-name>
+  	<url-pattern>/RegistrationController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SecurityQuestions</servlet-name>
+  	<url-pattern>/SecurityQuestions</url-pattern>
   </servlet-mapping>
 </web-app>

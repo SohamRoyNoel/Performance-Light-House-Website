@@ -46,6 +46,8 @@
 	href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
 	rel="stylesheet" />
 	<script src="js/jquery-1.11.1.js" type="text/javascript"></script>
+	
+	
 </head>
 <body>
 <section id="container">
@@ -75,6 +77,7 @@
                      </a>
                   </li>
                   <!-- notification dropdown end -->
+                  
                </ul>
                <!--  notification end -->
             </div>
