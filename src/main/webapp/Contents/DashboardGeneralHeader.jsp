@@ -50,6 +50,7 @@
 	<script src="js/jquery-1.11.1.js" type="text/javascript"></script>
 	<script src="resources/dist/dropzone.js"></script>
 <link rel="stylesheet" href="resources/dist/dropzone.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=" crossorigin="anonymous"></script>
 </head>
 <body>
 <section id="container">

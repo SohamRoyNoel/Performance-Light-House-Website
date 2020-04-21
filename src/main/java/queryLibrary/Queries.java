@@ -20,7 +20,23 @@ public class Queries {
 				"a.Application_Name=b.Request_App_Name) x )b where row_num=1 order by Application_Name";
 		return q;
 	}
-
+	
+	// Test cases
+	public static String getTestCaseNamesByApplicationName = "select * from TestScenario_Master where TS_Application_ID=";
+	public static String addTestCases = "insert into TestScenario_Master ([TS_Name], [TS_Application_ID], [TS_Reg_UserID], [TS_CreationTime]) values(?,?,?,?)";
+	public static String insertIntoTestScenarioHistory = "insert into TestScenario_Master_History ([TS_U_TS_ID], [TS_U_TS_Name], [TS_U_TS_Application_ID], [TS_U_TS_Reg_UserID], [TS_U_Status], [TS_U_CreationTime]) values (?,?,?,?,?,?)";
+	public static String getTestScenarioId(String timestamp, int uid, int appId, String Tsname) {
+		String Id = "select TS_ID from TestScenario_Master where TS_Application_ID="+appId+ " and TS_Reg_UserID="+uid+ " and TS_CreationTime='"+timestamp+"' and TS_Name='"+Tsname+"'";
+		return Id;
+	}
+	public static String getTestScenarioId(int appId, String Tsname) {
+		String Id = "select TS_ID from TestScenario_Master where TS_Application_ID="+appId+" and TS_Name='"+Tsname+"'";
+		return Id;
+	}
+	public static String updateTsMaster(int appId, int uid) {
+		String ts = "update TestScenario_Master set TS_Reg_UserID="+uid+" where TS_ID="+appId;
+		return ts;
+	}
 
 	// BasePage Queries
 	public static String baseTableOnload() {

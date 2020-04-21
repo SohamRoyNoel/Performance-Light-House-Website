@@ -1,6 +1,7 @@
 package controllers.middlewareControllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -28,8 +29,11 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String emails = request.getParameter("em");
-		String passwords = request.getParameter("ps");
+		
+		String emails = request.getParameter("email");
+		String passwords = request.getParameter("password");
+		System.out.println("Email : "+ emails);
+		System.out.println("Ps : "+ passwords);
 		Connection cn = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -53,25 +57,34 @@ public class LoginController extends HttpServlet {
 				}
 			}
 
+			System.out.println("Flag : "+ flag);
+			
 			if (flag) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LoginID", Id);
 				System.out.println("Success");
-				// System.out.println("path : " + request.getContextPath());
-//				RequestDispatcher requestDispatcher = request
-//	                    .getRequestDispatcher("/Base.jsp");
-//	            requestDispatcher.forward(request, response);
+				System.out.println("path : " + request.getContextPath());
+				String x = getServletContext().getRealPath("Base.jsp");
+				System.out.println("Paths : " + x);
+				RequestDispatcher requestDispatcher = request
+	                    .getRequestDispatcher("/Application.jsp");
+	            requestDispatcher.forward(request, response);
+//				response.sendRedirect("/PerformanceWebFramework/Application.jsp");
+//				response.sendRedirect(request.getSession().getServletContext().getRealPath("/Application.jsp"));
 			} else {
+				response.setContentType("text/html");
+				PrintWriter out = response.getWriter();
+				out.write("<html> <body> <div id='xyz' style='text-align: center;'>");
+				out.write("<p id='errmsg'>");
 				String greetings = "Incorrect CredentialsSS";
-				maps.put("greetings", greetings);
-				jsonx = new Gson().toJson(maps);
-
-				HttpSession session=request.getSession(false);  
-				String n=(String)session.getAttribute("LoginID");  
-				System.out.println("User Id : " + n);
-
-				response.setContentType("application/json");
-				response.getWriter().write(jsonx);
+				System.out.println(greetings);
+				
+				out.print(greetings);
+				
+				RequestDispatcher requestDispatchers = request
+	                    .getRequestDispatcher("/Login.jsp");
+	            requestDispatchers.include(request, response);
+	            out.close();
 			}
 
 			
@@ -80,15 +93,18 @@ public class LoginController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-
-	}
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		processRequest(request, response);
+////		doPost(request, response);
+//	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
+//		doGet(request, response);
+//		response.sendRedirect(request.getSession().getServletContext().getRealPath("/Application.jsp"));
 
 	}
 

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <jsp:include page="Contents/DashboardGeneralHeader.jsp" />
 <%@page import="queryLibrary.Queries"%>
 <%@page import="connectionFactory.Connections"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*"%>
+
 <%
    ResultSet resultset = null;
    %>
@@ -38,14 +39,26 @@ $(document).ready(function() {
 	        });
       });
 	
-	 // Populate Search table
-	 $('#xy').click(function(event) {
+	 // Add Test Case Controller
+	 $('#tcsm').click(function(event) {
 		 var aNO = $("select#apps").val();
-		 // alert(pageNO);
-		 $.get('PopulateTableController', {
-	       	 ApNO : aNO,
+		 var TcName= $("input#tcnm").val(); 
+		 
+		 $.get('AddTestcaseController', {
+	       	 ApNO : aNO, TcNM : TcName,
 	        }, function(response) {
-		        alert("Request Accepted, Waiting For Approval");
+	        	$('body').append('<div style="display:none;">'+response+'</div>');
+	            var r = confirm($('#pqId').val());
+	            
+            	if ($('#pqId').val() == "Test Case Already Exists! Do You want to Override?" && r == true) {
+            		$.get('TestScenarioHistoryController', {
+           	       	 	
+           	        }, function(response) {
+           	        	alert("Test Scenario Owner Is Changed");
+           	        });
+				}
+	            
+	            $("input[type='hidden']").remove();
 	      });
 	 });
 });
@@ -240,12 +253,14 @@ $(document).ready(function() {
 						  </div>
 						  <div class="form-group row">
 						    <label for="inputPassword" style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Add A Test Case Name For The Selected Application:</label>
-						    <div class="col-sm-7">
-						      <input type="password" class="form-control" id="inputPassword" placeholder="Test Case Name">
-						    </div>
-						     <div class="col-sm-2">
-						    	<button type="button" style="width:192px" class="btn btn-warning">Create Test Case</button>
-						    </div>
+							    <form action="AddTestcaseController" method="POST">
+							    <div class="col-sm-7">
+							      <input type="text" class="form-control" id="tcnm" placeholder="Test Case Name">
+							    </div>
+							     <div class="col-sm-2">
+							    	<button type="button" style="width:192px" id="tcsm" class="btn btn-warning">Create Test Case</button>
+							    </div>
+						    	</form>
 						    <br>
 						 
 						    <div class="col-sm-12">

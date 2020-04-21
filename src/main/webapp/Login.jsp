@@ -35,6 +35,10 @@
 		// 100% fit in a container
 		});
 		
+		$('#ems, #pss').click(function(){
+			$("#errmsg").hide();
+		});
+		
 		// Register User
 		$('#btnSub').click(function(event) {
 			 var fname = $("input#Fnm").val();
@@ -53,31 +57,14 @@
 			$.get('RegistrationController', {
 				fn : fname, ln : lname,un : uname, em : email,ps : password, secQ : secQus,secAns : secQusAns,
 			}, function(response) {
+				
 				var x =response;
 	  	    	alert(x);
 			});
 		});
 		
 		
-		// Login User
-		$('#loginer').click(function(event) {
-			 var emails = $("input#ems").val();
-             var passwords = $("input#pss").val();
-             
-             if(emails == '' || password == ''){
-            	 alert("Email Address or Password can not remain blank.");
-             }
-
-			$.get('LoginController', {
-				ps : passwords, em : emails,
-			}, function(response) {
-				
-				if(response){
-		  	    	alert("Incorrect Credentials");
-				}				
-	  	    	
-			});
-		});
+		
 
 	});
 </script>
@@ -154,22 +141,23 @@
 									<h6>Got an account? Enter your details below to login</h6>
 								</div>
 								<div class="login-top">
-									<form>
-										<input type="text" class="email" id="ems" placeholder="Email"
-											required="" /> <input type="password" id="pss" class="password"
+									<form action="LoginController" method="POST">
+										<input type="text" class="email" id="ems" name="email" placeholder="Email"
+											required="" /> <input type="password" name="password" id="pss" class="password"
 											placeholder="Password" required="" /> 
-									</form>
+									
 									<div class="login-bottom">
 										<ul>
 											<li>
 												<form>
 													<input type="submit" id="loginer" value="LOGIN" />
 												</form>
-											</li>
+										</li>
 											<li><a href="#">Forgot password?</a></li>
 											<ul>
 												<div class="clear"></div>
 									</div>
+									</form>
 								</div>
 							</div>
 							<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
