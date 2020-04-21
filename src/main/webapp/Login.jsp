@@ -37,19 +37,46 @@
 		
 		// Register User
 		$('#btnSub').click(function(event) {
-			alert("hello how low");
-			 var name = $("input#name").val();
+			 var fname = $("input#Fnm").val();
+			 var lname = $("input#Lnm").val();
+             var uname = $("input#Unm").val();
              var email = $("input#email").val();
-             var pname = $("input#pname").val();
              var password = $("input#password").val();
              var secQus = $("select#seqQus").val();
              var secQusAns = $("input#ans").val();
+             
+             if(fname == '' || lname == '' || uname == '' || email == '' || password == '' || secQus == '' || secQusAns == ''){
+            	 alert("All fields should be filled.");
+            	 
+             }
 
 			$.get('RegistrationController', {
-				nm : name, em : email,pnm : pname, ps : password, secQ : secQus, secAns : secQusAns,
+				fn : fname, ln : lname,un : uname, em : email,ps : password, secQ : secQus,secAns : secQusAns,
 			}, function(response) {
+				var x =response;
+	  	    	alert(x);
 			});
-			alert("Registration Successful; Now Login To Obtain API Key");
+		});
+		
+		
+		// Login User
+		$('#loginer').click(function(event) {
+			 var emails = $("input#ems").val();
+             var passwords = $("input#pss").val();
+             
+             if(emails == '' || password == ''){
+            	 alert("Email Address or Password can not remain blank.");
+             }
+
+			$.get('LoginController', {
+				ps : passwords, em : emails,
+			}, function(response) {
+				
+				if(response){
+		  	    	alert("Incorrect Credentials");
+				}				
+	  	    	
+			});
 		});
 
 	});
@@ -128,16 +155,15 @@
 								</div>
 								<div class="login-top">
 									<form>
-										<input type="text" class="email" placeholder="Email"
-											required="" /> <input type="password" class="password"
-											placeholder="Password" required="" /> <input type="checkbox"
-											id="brand" value="">
+										<input type="text" class="email" id="ems" placeholder="Email"
+											required="" /> <input type="password" id="pss" class="password"
+											placeholder="Password" required="" /> 
 									</form>
 									<div class="login-bottom">
 										<ul>
 											<li>
 												<form>
-													<input type="submit" value="LOGIN" />
+													<input type="submit" id="loginer" value="LOGIN" />
 												</form>
 											</li>
 											<li><a href="#">Forgot password?</a></li>
@@ -149,9 +175,10 @@
 							<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
 								<div class="login-top sign-top">
 									<form action="#" method="post">
-										<input type="text" name="name" id="name" class="name active" placeholder="Your Name" required="" /> 
+										<input type="text" name="name" id="Fnm" class="name active" placeholder="First Name" required="" />
+										<input type="text" name="name" id="Lnm" class="name active" placeholder="Last Name" required="" />
+										<input type="text" name="name" id="Unm" class="name active" placeholder="User Name" required="" /> 
 										<input type="text" name="email" class="email" id="email" placeholder="Your Cognizant Email" required="" />
-										<input type="text" name="password" class="phone" id="pname" placeholder="Your Project Name" required="" />
 										<input type="password" name="password" id="password" class="password" placeholder="Password" required="" />
 										<%
 								         try {
@@ -187,6 +214,7 @@
 											<ul>
 												<div class="clear"></div>
 									</div>
+									<div id="ajaxGetUserServletResponse"></div>
 								</div>
 							</div>
 						</div>
@@ -199,7 +227,7 @@
 		</div>
 		<p class="footer">
 			&copy; 2016 Account Login Widget. All Rights Reserved | Design by <a
-				href="http://w3layouts.com/"> Soham Roy</a>
+				href=""> Soham Roy</a>
 		</p>
 	</div>
 </body>

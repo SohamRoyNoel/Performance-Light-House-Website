@@ -1,27 +1,63 @@
 package queryLibrary;
 
 public class Queries {
-	
+
+	// Application Queries
+	public static String getAllApplications = "select * from Application_Master";
+	public static String getAllApplicationname = "select Application_Name from Application_Master where Application_ID";
+	public static String getAllApplications(int UID) {
+		String getAllApplication = "select a.Application_Name, a.Application_Id from Application_Master a left join Application_User_Mapper b on a.Application_ID=b.App_Application_ID where b.App_user_Reg_ID="+UID;
+		return getAllApplication;
+	}
+	public static String addNewApplicationRequest = "insert into [PerformanceFinal].[dbo].[Application_Request_Mapper] ([Request_App_Name],[Request_App_By_Reg_UserID], [Request_App_ApprovedBy_Reg_UserID], [Request_Status]) values (?,?,?,?)";
+	public static String getAppNameWithStatus(int UID) {
+		String q = "select Application_ID, Application_Name,Status from ("+
+				"select Application_ID, Application_Name,Status, ROW_NUMBER() over (partition by Application_Name  order by Status) as row_num  from (SELECT a.application_id,a.application_name,"+
+				"case when (Request_App_By_Reg_UserID="+UID+") then "+
+				"b.request_status else 'take Access'"+
+				"end as status from application_master a "+
+				"left join Application_Request_Mapper b on "+
+				"a.Application_Name=b.Request_App_Name) x )b where row_num=1 order by Application_Name";
+		return q;
+	}
+
+
+	// BasePage Queries
+	public static String baseTableOnload() {
+		String authenticationTest = "select a.TestScenarioName, b.Application_NAME from TestScenario a inner join Application_Name b on a.TestScenarioID=b.TestScenarioID";
+		return authenticationTest;
+	}
+
+
 	// Security Questions
-	public static String askSecurityQuestion = "select * from [Performance].[dbo].[Security_Questions]";
-	
+	public static String askSecurityQuestion = "select * from [PerformanceFinal].[dbo].[Security_Questions]";
+
 	// Register an User
+	public static String askRegisterUser = "select * from [PerformanceFinal].[dbo].[User_Registration]";
 	public static String registerUser() {
-		String r = "INSERT INTO [dbo].[Registration] ([Reg_ApiKEY],[Reg_Name],[Reg_Cog_Email],[Reg_Cog_ProjectName],[Reg_Password],[Reg_RecoveryQusID],[Reg_RecoveryQusANS])VALUES(?,?,?,?,?,?,?)";
+		String r = "INSERT INTO [PerformanceFinal].[dbo].[User_Registration] ([Reg_F_Name],[Reg_L_Name],[Reg_UserName],[Reg_Email],[Reg_Password],[Reg_API_KEY],[Reg_Security_Qus_ID],[Reg_Security_Qus_Ans], [Reg_User_Type])VALUES(?,?,?,?,?,?,?,?,?)";
 		return r;
 	}
+
+	// Login an User
+	public static String loginUser(String email, String password) {
+		String r = "select * from [PerformanceFinal].[dbo].[User_Registration] where Reg_Email='"+email+"' and Reg_Password='"+password+"'";
+		return r;
+	}
+
+
 
 	// DropDown Queries
 	public static String askApplicationname = "select * from [Performance].[dbo].[Application_Name]";
 	public static String askPageName = "select * from [Performance].[dbo].[Page_Name] where Application_ID=";
 	public static String askTestScenerioName = "select * from [Performance].[dbo].[TestScenario] where TestScenarioID=";
-	
+
 	// Navigation Graph query
 	public static String askNavGraphQuery(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
 		String q = "select AVG(CONVERT(FLOAT,Nav_UnloadEvent)), AVG(CONVERT(FLOAT,Nav_RedirectEvent)), AVG(CONVERT(FLOAT,Nav_AppCache)), AVG(CONVERT(FLOAT,Nav_TTFB)),AVG(CONVERT(FLOAT,Nav_Processing)),AVG(CONVERT(FLOAT,Nav_DomInteractive)),AVG(CONVERT(FLOAT,Nav_DomComplete)),AVG(CONVERT(FLOAT,Nav_ContentLoad)),AVG(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID="+testCsNO+" and Application_ID="+applicationNo+" and Page_ID="+pageNO+" and convert(Date,Nav_DateTimes) between '" + dtStart +"' and '"+dtEnd+"'";
 		return q;
 	}
-	
+
 	// Page Load Event Queries
 	public static String askAveragePageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
 		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [Performance].[dbo].[Navigation] where TestScenarioID="+ testCsNO+" and Application_ID="+applicationNo+" and Page_ID="+pageNO+" and convert(Date,Nav_DateTimes) between '"+dtStart+"' and '"+dtEnd+"'";

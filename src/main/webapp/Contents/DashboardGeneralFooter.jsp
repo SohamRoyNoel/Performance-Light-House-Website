@@ -17,26 +17,7 @@
 		<!--script for this page-->
 		<script src="resources/lib/sparkline-chart.js"></script>
 		<script src="resources/lib/zabuto_calendar.js"></script>
-		<script type="text/javascript">
-         $(document).ready(function() {
-           var unique_id = $.gritter.add({
-             // (string | mandatory) the heading of the notification
-             title: 'Welcome to Performance Dashboard!',
-             // (string | mandatory) the text inside the notification
-             text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
-             // (string | optional) the image to display on the left
-             image: 'https://kitconcept.com/blog/static/lighthouse-logo-af07c4b89f3fa49c62ef529afb647ac3-3067a.png',
-             // (bool | optional) if you want it to fade out on its own or just sit there
-             sticky: false,
-             // (int | optional) the time you want it to be alive for before fading out
-             time: 8000,
-             // (string | optional) the class name you want to apply to that specific message
-             class_name: 'my-sticky-class'
-           });
-         
-           return false;
-         });
-      </script>
+		
 		<script type="text/javascript">
          $(document).ready(function() {
          $('.js-example-basic-multiple').select2();

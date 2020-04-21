@@ -1,42 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <jsp:include page="Contents/DashboardGeneralHeader.jsp" />
-<style>
-* {
-	box-sizing: border-box;
-}
-
-#myInput {
-	background-image: url('/css/searchicon.png');
-	background-position: 10px 10px;
-	background-repeat: no-repeat;
-	width: 100%;
-	font-size: 16px;
-	padding: 12px 20px 12px 40px;
-	border: 1px solid #ddd;
-	margin-bottom: 12px;
-}
-
-#myTable {
-	border-collapse: collapse;
-	width: 100%;
-	border: 1px solid #ddd;
-	font-size: 18px;
-}
-
-#myTable th, #myTable td {
-	text-align: left;
-	padding: 12px;
-}
-
-#myTable tr {
-	border-bottom: 1px solid #ddd;
-}
-
-#myTable tr.header, #myTable tr:hover {
-	background-color: #f1f1f1;
-}
-</style>
+<%@page import="queryLibrary.Queries"%>
+<%@page import="connectionFactory.Connections"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*"%>
+<%
+   ResultSet resultset = null;
+   %>
+   
+<script>
+$(document).ready(function() { 
+	// Creates application
+	$('#RequestBtn').click(function(event) {
+		var apName = $("input#apName").val();
+		if(apName == ''){
+			alert("Application can not be added when it is empty");
+		}else{
+			$.get('CreateApplicationController', {
+		       	 ApplicationName : apName
+		        }, function(response) {
+		        	alert("Requested Application is Accepted, Waiting For Approval");    
+		        });
+		}
+        
+	});
+	
+	// Request Handler
+	 $('.xx').click(function(event) {
+		 var id = $(this).closest("tr").find(".appId").text();
+		 var name = $(this).closest("tr").find(".apNm").text();
+		 // alert("Id : " + id + " Name : " + name);
+		 $.get('CreateRequestController', {
+	       	 AppId : id, AppN : name,
+	        }, function(response) {
+		        alert("Request Accepted, Waiting For Approval");
+	        });
+      });
+});
+</script>
 <!-- <aside> -->
 <div id="sidebar" style="visibility: visible;" class="">
 	<!-- sidebar menu start-->
@@ -57,131 +59,274 @@
 	<!-- sidebar menu end-->
 </div>
 <!-- </aside> -->
+<!-- <popup Update> -->
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Update Your TestCase Name and Application Name</h4>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="email" id="defaultForm-email" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-email">Application Name</label>
+        </div>
+
+        <div class="md-form mb-4">
+          <input type="password" id="defaultForm-pass" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">Testcase Name</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-success">Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalSureForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Are You Sure? You Should know the consequence! </h4>
+      </div>
+      <div class="modal-footer d-flex center">
+      <center>
+        <button class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#opener").click(function(){
+            $("#modalLoginForm").modal('show');
+        });
+    });
+    $(document).ready(function(){
+        $("#sure").click(function(){
+            $("#modalSureForm").modal('show');
+        });
+    });
+</script>
+<!-- </popup Update> -->
+
 <section id="main-content">
 	<section class="wrapper">
-		<div class="row">
-			<div class="col-lg-12 main-chart">
-				<!--CUSTOM CHART START -->
-				<div class="border-head" style="width: 1650px;">
-					<h3>Create A New TestCase Here</h3>
+<br><br>
+	<!-- Classic tabs -->
+<div id="exTab2" class="">	
+<ul class="nav nav-tabs">
+			<li class="active">
+        <a  href="#1" data-toggle="tab">Applications</a>
+			</li>
+			<li><a href="#2" data-toggle="tab">Test Cases</a>
+			</li>
+		</ul>
+
+			<div class="tab-content ">
+			  <div class="tab-pane active" id="1">
+			  
+			  <h3>Manage Application : Application View</h3>
+			  <!-- 1 St part -->
+          			<div class="form-group row">
+					  </div>
+					  <div class="form-group row">
+					    <label for="inputPassword" style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Add New Application To The List:</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="apName" placeholder="Application Name(EG: www.ABCApp.com)">
+					    </div>
+					     <div class="col-sm-2">
+					    	<button type="button" id="RequestBtn" class="btn btn-warning">Raise Request</button>
+					    </div>
+					  </div>
+				<!-- /1 St part -->
+				<hr>
+				<!-- 2nd part -->
+					<h3>All Listed Applications here</h3>
+					<div>
+					<input type="text" id="myInput" onkeyup="myFunction1()" placeholder="Search for Application names.." title="Type in a name">
+					<table style="width:100%; border: none;" id="myTable">
+					  <tr>
+					    <th>Application Id</th>
+					    <th>Application Name</th>
+					    <th>Application Status</th>
+					    <th>Raise Request</th>
+					  </tr>
+					  <%
+				         try {
+				        	
+				         	Connection connection = Connections.getConnection();
+				         	Statement statement = connection.createStatement();
+				         	HttpSession sessions=request.getSession(false);  
+							String userID=(String)sessions.getAttribute("LoginID");
+							
+							int UID = Integer.parseInt(userID);
+							System.out.println("Hello : "+UID);
+				         	resultset = statement.executeQuery(Queries.getAppNameWithStatus(UID));
+				         	System.out.println("Query : " + Queries.getAppNameWithStatus(UID) );
+				         	while (resultset.next()) {
+				         %>
+					  <tr style="border: none;">
+					    <td class="appId"><%=resultset.getInt(1)%></td>
+					    <td class="apNm"><%=resultset.getString(2)%></td>
+					    <td><%=resultset.getString(3)%></td>
+					    <td><button type="button" id="req" class="btn btn-warning xx"><i class="fa fa-question-circle" aria-hidden="true"></i></button></td>
+					  </tr>
+					  <%
+				            }
+				         } catch (Exception e) {
+					         	out.println("wrong entry" + e);
+					         }
+				            %>
+					</table>
+					
+					</div>
+				<!-- 2nd part -->
+			  </div>
+			  <script>
+			  $(document).ready(function() {
+				    $('.js-example-basic-multiple').select2();
+				});
+			  </script>
+				<div class="tab-pane" id="2">
+          			<h3 style="color:blue">Manage Application : Application View</h3>
+				  <!-- 1 St part -->
+	          			<div class="form-group row">
+	          			<label style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Select An Application Name:</label>
+	          			<div class="col-sm-7">
+	          				 <select class="js-example-basic-multiple" style="width: 965px;" name="states[]" aria-placeholder="Select Test Case">
+	          				 	<%
+							         try {
+							        	
+							         	Connection connection = Connections.getConnection();
+							         	Statement statement = connection.createStatement();
+							         	HttpSession sessions=request.getSession(false);  
+										String userID=(String)sessions.getAttribute("LoginID");
+										
+										int UID = Integer.parseInt(userID);
+							         	resultset = statement.executeQuery(Queries.getAllApplications(UID));
+							         	while (resultset.next()) {
+							         %>
+	          				 
+                                   <option value="<%=resultset.getInt(2)%>"><%=resultset.getString(1)%></option>
+                                   <%
+							            }
+							         } catch (Exception e) {
+								         	out.println("wrong entry" + e);
+					        		 }
+				            		%>
+                             </select>
+                             </div>
+                             <div class="col-sm-2">
+						    	<button type="button" class="btn btn-warning">Check Existing Test Cases</button>
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="inputPassword" style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Add A Test Case Name For The Selected Application:</label>
+						    <div class="col-sm-7">
+						      <input type="password" class="form-control" id="inputPassword" placeholder="Test Case Name">
+						    </div>
+						     <div class="col-sm-2">
+						    	<button type="button" style="width:192px" class="btn btn-warning">Create Test Case</button>
+						    </div>
+						    <br>
+						 
+						    <div class="col-sm-12">
+						    <h3 style="color:blue">Drag And Drop Application Name And Test Case(.xlsx format only)</h3>
+						    	<form action="/file-upload" class="dropzone" id="my-awesome-dropzone"></form>
+						    </div>
+						  </div>
+					<!-- /1 St part -->
+					<hr>
+					 <h3 style="color:blue">All Test Cases Related To  </h3>
+					<div>
+					<input type="text" id="myInput11" class="inpt" onkeyup="myFunction()" placeholder="Search by User names.." title="Type in a name">
+					<table style="width:100%; border: none;" class="tab" id="myTable11">
+					  <tr>
+					    <th>Test Case Id</th>
+					    <th>Test Case Name</th>
+					    <th>Created By</th>
+					    <th>Creation or Updation Time</th>
+					    <th>Edit Or Delete</th>
+					  </tr>
+					  <tr style="border: none;">
+					    <td>1</td>
+					    <td>JHIndex</td>
+					    <td>chansum</td>
+					    <td>2020-04-19 18:41:07.8010000</td>
+					    <td><button type="button" id="opener" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></button> &nbsp&nbsp <button type="button" id="sure" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+					  </tr>
+					  <tr style="border: none;">
+					    <td>1</td>
+					    <td>JHIndex</td>
+					    <td>roysoha</td>
+					    <td>2020-04-19 18:41:07.8010000</td>
+					    <td><button type="button"  id="opener" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></button> &nbsp&nbsp <button type="button" id="sure" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+					  </tr>
+					</table>
+					
+					</div>
 				</div>
-				<form class="form-horizontal" action="">
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="email">Enter
-							Your Test Scenario Name:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="email"
-								placeholder="Enter Your Test Scenario Name" name="email">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="pwd">Enter Your
-							Application Name:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="pwd"
-								placeholder="Enter Your Application Name" name="pwd">
-						</div>
-					</div>
-					<div class="form-group"></div>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-primary">Check
-								Availability Of Your Application Name</button>
-						</div>
-					</div>
-				</form>
-				<br>
-				<div class="border-head" style="width: 1650px;">
-					<h3>Update or Remove Your Old TestCase Here</h3>
-				</div>
-
-
-				<h2>Your TestCases</h2>
-
-				<input type="text" id="myInput" onkeyup="myFunction()"
-					placeholder="Search for names.." title="Type in a name">
-
-				<table id="myTable">
-					<tr>
-						<th style="width: 1200px;">Select</th>
-						<th style="width: 1200px;">TestCase Name</th>
-						<th style="width: 1200px;">Application Name</th>
-						<th style="width: 1200px;">Choose Actions</th>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC1</td>
-						<td>Application 1</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC2</td>
-						<td>Application 1</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC3</td>
-						<td>Application 2</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC4</td>
-						<td>Application 2</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC5</td>
-						<td>Application 1</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC6</td>
-						<td>Application 3</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC7</td>
-						<td>Application 2</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>TC8</td>
-						<td>Application 1</td>
-						<td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-					</tr>
-				</table>
-
-				<script>
-					function myFunction() {
-						var input, filter, table, tr, td, i, txtValue;
-						input = document.getElementById("myInput");
-						filter = input.value.toUpperCase();
-						table = document.getElementById("myTable");
-						tr = table.getElementsByTagName("tr");
-						for (i = 0; i < tr.length; i++) {
-							td = tr[i].getElementsByTagName("td")[2];
-							if (td) {
-								txtValue = td.textContent || td.innerText;
-								if (txtValue.toUpperCase().indexOf(filter) > -1) {
-									tr[i].style.display = "";
-								} else {
-									tr[i].style.display = "none";
-								}
-							}
-						}
-					}
-				</script>
 			</div>
-		</div>
-		</div>
+  </div>
+<!-- Classic tabs -->
 	</section>
 </section>
+<script>
+// When the user scrolls down 20px from the top of the document, slide down the navbar
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-50px";
+  }
+}
+</script>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput11");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable11");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+function myFunction1() {
+	  var input, filter, table, tr, td, i, txtValue;
+	  input = document.getElementById("myInput");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("myTable");
+	  tr = table.getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+	    td = tr[i].getElementsByTagName("td")[1];
+	    if (td) {
+	      txtValue = td.textContent || td.innerText;
+	      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	        tr[i].style.display = "";
+	      } else {
+	        tr[i].style.display = "none";
+	      }
+	    }       
+	  }
+	}
+</script>
 
 <jsp:include page="Contents/DashboardGeneralFooter.jsp" />

@@ -29,26 +29,59 @@ public class RegistrationController extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String name = request.getParameter("nm");
+    	String fname = request.getParameter("fn");
+    	String lname = request.getParameter("ln");
+    	String uname = request.getParameter("un");
     	String email = request.getParameter("em");
-    	String pname = request.getParameter("pnm");
     	String password = request.getParameter("ps");
-    	String securityQus = request.getParameter("secQ");
+    	String securityqus = request.getParameter("secQ");
     	String securityAns = request.getParameter("secAns");
     	String apiToken = Randomizer.RandomCustomAPI();
+    	String UserRole = "User";
+    	Map<String, String> maps = new HashMap<String, String>();
     	// System.out.println("nm : " + name + " em : " + email + " pname " + pname + " password " + password + " sqcQ  " + securityQus + " sqcA " + securityAns);
     	
+    	Statement st = null;
+		ResultSet rs = null;
+		boolean flag = true;
+		String jsonx = null;
+		
     	String query = Queries.registerUser();
+    	String regSuccessQuery = Queries.askRegisterUser;
     	try (Connection connection = Connections.getConnection()) {
-        	PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, apiToken);
-			preparedStatement.setString(2, name);
-			preparedStatement.setString(3, email);
-			preparedStatement.setString(4, pname);
-			preparedStatement.setString(5, password);
-			preparedStatement.setInt(6, Integer.parseInt(securityQus));
-			preparedStatement.setString(7, securityAns);
-			preparedStatement.executeUpdate();
+    		
+    		st = connection.createStatement();
+			rs = st.executeQuery(regSuccessQuery);
+			while(rs.next()) {
+				if(rs.getString(3).equals(email)){
+					flag = false;
+				} 
+			}
+    		
+			if (flag) {
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, fname);
+				preparedStatement.setString(2, lname);
+				preparedStatement.setString(3, uname);
+				preparedStatement.setString(4, email);
+				preparedStatement.setString(5, password);
+				preparedStatement.setString(6, apiToken);
+				preparedStatement.setInt(7, Integer.parseInt(securityqus));
+				preparedStatement.setString(8, securityAns);
+				preparedStatement.setString(9, UserRole);
+				preparedStatement.executeUpdate();
+				
+				maps.put("greetings", "Login Successful");
+			} else {
+				String greetings = "Same Email Id already exists. You should Login";
+				maps.put("greetings", "Same Email Id already exists. You should Login");
+			}
+        	
+			jsonx = new Gson().toJson(maps);
+			System.out.println("json : " + jsonx);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonx);
 			
     	}catch (SQLException e) {
     		e.printStackTrace();

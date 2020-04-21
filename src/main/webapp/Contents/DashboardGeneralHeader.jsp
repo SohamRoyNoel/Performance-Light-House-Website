@@ -19,8 +19,10 @@
 <!-- Custom styles for this template -->
 <link href="resources/css/styleD.css" rel="stylesheet">
 <link href="resources/css/style-responsive.css" rel="stylesheet">
+<link href="resources/css/PopupStyle.css" rel="stylesheet">
 <script src="resources/lib/chart-master/Chart.js"></script>
 <script type="text/javascript" src="resources/js/js/fusioncharts.js"></script>
+	
 <script type="text/javascript"
 	src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 <link
@@ -46,8 +48,8 @@
 	href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
 	rel="stylesheet" />
 	<script src="js/jquery-1.11.1.js" type="text/javascript"></script>
-	
-	
+	<script src="resources/dist/dropzone.js"></script>
+<link rel="stylesheet" href="resources/dist/dropzone.css">
 </head>
 <body>
 <section id="container">
