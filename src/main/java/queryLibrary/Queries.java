@@ -4,7 +4,14 @@ public class Queries {
 
 	// Application Queries
 	public static String getAllApplications = "select * from Application_Master";
-	public static String getAllApplicationname = "select Application_Name from Application_Master where Application_ID";
+	public static String getAppIds(String appName) {
+		String getAllApplicationname = "select Application_ID from Application_Master where Application_Name='"+appName+"'";
+		return getAllApplicationname;
+	}
+	public static String getAppIds1(String appName) {
+		String getAllApplicationname = "select * from Application_Master where Application_Name='"+appName+"'";
+		return getAllApplicationname;
+	}
 	public static String getAllApplications(int UID) {
 		String getAllApplication = "select a.Application_Name, a.Application_Id from Application_Master a left join Application_User_Mapper b on a.Application_ID=b.App_Application_ID where b.App_user_Reg_ID="+UID;
 		return getAllApplication;
@@ -41,6 +48,8 @@ public class Queries {
 		String r = "select a.TS_ID, a.TS_Name, b.Reg_UserName, a.TS_CreationTime from TestScenario_Master a left join User_Registration b on a.TS_Reg_UserID = b.Reg_UserID where a.TS_Application_ID ="+Aid;
 		return r;
 	}
+	public static String ifUserHasAccessWhileBulkUpload = "select * from Application_User_Mapper where App_user_Reg_ID=";
+	
 	//public static String userNameById = "select Reg_UserName from User_Registration where Reg_UserID=";
 
 	// BasePage Queries

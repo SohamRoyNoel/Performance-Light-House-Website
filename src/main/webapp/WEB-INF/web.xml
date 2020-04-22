@@ -94,6 +94,12 @@
   	<description></description>
   	<servlet-class>controllers.updateControllers.TestScenarioHistoryController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UploadFileController</servlet-name>
+  	<display-name>UploadFileController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.updateControllers.UploadFileController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -153,5 +159,11 @@
   <servlet-mapping>
   	<servlet-name>TestScenarioHistoryController</servlet-name>
   	<url-pattern>/TestScenarioHistoryController</url-pattern>
+  	
   </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UploadFileController</servlet-name>
+  	<url-pattern>/UploadFileController</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

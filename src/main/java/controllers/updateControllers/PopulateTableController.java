@@ -54,7 +54,7 @@ public class PopulateTableController extends HttpServlet {
 				tsName = rs.getString(2);
 				regUname = rs.getString(3);
 				date = rs.getDate(4).toString();
-				String htmlButton = "<button type='button'  id='opener' class='btn btn-warning'><i class='fa fa-pencil' aria-hidden='true'></i></button> &nbsp&nbsp <button type='button' id='sure' class='btn btn-danger'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+				String htmlButton = "<button type='button' onClick='opener(this);' id='opener' class='btn btn-warning'><i class='fa fa-pencil' aria-hidden='true'></i></button> &nbsp&nbsp <button type='button' id='sure' class='btn btn-danger'><i class='fa fa-trash' aria-hidden='true'></i></button>";
 				
 				String appender = "{\"id\":\""+String.valueOf(tid)+"\",\"tsnm\":\""+tsName+"\",\"userId\":\""+regUname+"\",\"date\":\""+date+"\",\"Button\":\""+htmlButton+"\"}";
 //				String appender = "{\"id\":\""+String.valueOf(tid)+"\",\"tsnm\":\""+tsName+"\",\"userId\":\""+regUname+"\",\"date\":\""+date+"\"}";

@@ -91,7 +91,17 @@ $(document).ready(function() {
  				console.log(ed);
      });
      });
+	
+	
+	
 });
+
+function opener(){
+	if(!$("#myTable11 tbody").length == 0){
+		$("#modalLoginForm").modal('show');	
+	}
+	
+}
 </script>
 <!-- <aside> -->
 <div id="sidebar" style="visibility: visible;" class="">
@@ -158,9 +168,10 @@ $(document).ready(function() {
 </div>
 <script>
     $(document).ready(function(){
-        $("#opener").click(function(){
+        /*$("#opener").click(function(){
+        	console.log("Modal");
             $("#modalLoginForm").modal('show');
-        });
+        });*/
     });
     $(document).ready(function(){
         $("#sure").click(function(){
@@ -296,7 +307,7 @@ $(document).ready(function() {
 						 
 						    <div class="col-sm-12">
 						    <h3 style="color:blue">Drag And Drop Application Name And Test Case(.xlsx format only)</h3>
-						    	<form action="/file-upload" class="dropzone" id="my-awesome-dropzone"></form>
+						    	<form action="UploadFileController" method="POST" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data"></form>
 						    </div>
 						  </div>
 					<!-- /1 St part -->
