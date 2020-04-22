@@ -47,7 +47,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
 	rel="stylesheet" />
-	<script src="js/jquery-1.11.1.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="resources/dist/dropzone.js"></script>
 <link rel="stylesheet" href="resources/dist/dropzone.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=" crossorigin="anonymous"></script>

@@ -44,23 +44,53 @@ $(document).ready(function() {
 		 var aNO = $("select#apps").val();
 		 var TcName= $("input#tcnm").val(); 
 		 
-		 $.get('AddTestcaseController', {
-	       	 ApNO : aNO, TcNM : TcName,
-	        }, function(response) {
-	        	$('body').append('<div style="display:none;">'+response+'</div>');
-	            var r = confirm($('#pqId').val());
-	            
-            	if ($('#pqId').val() == "Test Case Already Exists! Do You want to Override?" && r == true) {
-            		$.get('TestScenarioHistoryController', {
-           	       	 	
-           	        }, function(response) {
-           	        	alert("Test Scenario Owner Is Changed");
-           	        });
-				}
-	            
-	            $("input[type='hidden']").remove();
-	      });
+		 if (TcName != '') {
+			 $.get('AddTestcaseController', {
+		       	 ApNO : aNO, TcNM : TcName,
+		        }, function(response) {
+		        	$('body').append('<div style="display:none;">'+response+'</div>');
+		            var r = confirm($('#pqId').val());
+		            
+	            	if ($('#pqId').val() == "Test Case Already Exists! Do You want to Override?" && r == true) {
+	            		$.get('TestScenarioHistoryController', {
+	           	       	 	
+	           	        }, function(response) {
+	           	        	alert("Test Scenario Owner Is Changed");
+	           	        });
+					}
+		            
+		            $("input[type='hidden']").remove();
+		      });
+		} else {
+			alert("Test case name can not be added when it is empty");
+		}
 	 });
+	 
+
+	// Onchange Table Populate
+	 $('#apps').change(function(event) {	
+         var id = $("select#apps").val();
+         
+         $.get('PopulateTableController', {
+        	 ApplicationId : id
+         }, function(response) {
+ 				var ed = '';
+ 				$('.dels').remove();
+ 				response.forEach(json => {
+ 					let value = JSON.parse(json);
+					  var x1 = value.id;var x2 = value.tsnm;var x3 = value.userId;var x4 = value.date;var x5 = value.Button;//console.log(x1);
+					    ed += '<tr class="dels">';
+	 					ed += '<td>'+x1+'</td>';
+	 					ed += '<td>'+x2+'</td>';
+	 					ed += '<td>'+x3+'</td>';
+	 					ed += '<td>'+x4+'</td>';
+	 					ed += '<td>'+x5+'</td>';
+	 					ed += '</tr>';
+					});
+ 				$('.tabs').append(ed);
+ 				console.log(ed);
+     });
+     });
 });
 </script>
 <!-- <aside> -->
@@ -225,6 +255,7 @@ $(document).ready(function() {
 	          			<label style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Select An Application Name:</label>
 	          			<div class="col-sm-7">
 	          				 <select class="js-example-basic-multiple" style="width: 965px;" id="apps" name="states[]" aria-placeholder="Select Test Case">
+	          				 <option value="#" selected disabled>Select Your Application</option> 
 	          				 	<%
 							         try {
 							        	
@@ -274,6 +305,7 @@ $(document).ready(function() {
 					<div>
 					<input type="text" id="myInput11" class="inpt" onkeyup="myFunction()" placeholder="Search by User names.." title="Type in a name">
 					<table style="width:100%; border: none;" class="tab" id="myTable11">
+					<thead>
 					  <tr>
 					    <th>Test Case Id</th>
 					    <th>Test Case Name</th>
@@ -281,20 +313,10 @@ $(document).ready(function() {
 					    <th>Creation or Updation Time</th>
 					    <th>Edit Or Delete</th>
 					  </tr>
-					  <tr style="border: none;">
-					    <td>1</td>
-					    <td>JHIndex</td>
-					    <td>chansum</td>
-					    <td>2020-04-19 18:41:07.8010000</td>
-					    <td><button type="button" id="opener" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></button> &nbsp&nbsp <button type="button" id="sure" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-					  </tr>
-					  <tr style="border: none;">
-					    <td>1</td>
-					    <td>JHIndex</td>
-					    <td>roysoha</td>
-					    <td>2020-04-19 18:41:07.8010000</td>
-					    <td><button type="button"  id="opener" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></button> &nbsp&nbsp <button type="button" id="sure" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-					  </tr>
+					  </thead>
+					  <tbody class="tabs">
+					  </tbody>
+					  
 					</table>
 					
 					</div>

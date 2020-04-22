@@ -37,6 +37,11 @@ public class Queries {
 		String ts = "update TestScenario_Master set TS_Reg_UserID="+uid+" where TS_ID="+appId;
 		return ts;
 	}
+	public static String populateTableId(int Aid) {
+		String r = "select a.TS_ID, a.TS_Name, b.Reg_UserName, a.TS_CreationTime from TestScenario_Master a left join User_Registration b on a.TS_Reg_UserID = b.Reg_UserID where a.TS_Application_ID ="+Aid;
+		return r;
+	}
+	//public static String userNameById = "select Reg_UserName from User_Registration where Reg_UserID=";
 
 	// BasePage Queries
 	public static String baseTableOnload() {
