@@ -91,7 +91,10 @@ public class Queries {
 		String s = "select  x.Page_ID, x.Page_Name from Page_Master x right join (select distinct a.Nav_page_ID as PGID from Navigation_Master a left join Application_Master b on b.Application_ID = a.Nav_Application_ID where b.Application_ID="+apId+") y on y.PGID = x.Page_ID";
 		return s;
 	}
-	public static String askTestScenerioName = "select * from [PerformanceFinal].[dbo].[TestScenario] where TestScenarioID=";
+	public static String askTestScenerioName(int pgID) {
+		String s = "select x.TS_ID, x.TS_Name from TestScenario_Master x right join (select distinct a.Nav_TS_ID as NVTS from Navigation_Master a left join Page_Master b on a.Nav_Page_ID=b.Page_ID where b.Page_ID = "+pgID+") y on y.NVTS=x.TS_ID";
+		return s;
+	}
 
 	// Navigation Graph query
 	public static String askNavGraphQuery(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {

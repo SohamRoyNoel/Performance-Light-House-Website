@@ -27,7 +27,7 @@
                  });
                  });
            
-         /*// Get the Test Scenerio of choosen state
+         // Get the Test Scenerio of choosen state
          $('#page').click(function(event) {
          	    var pageNO = $("select#page").val();
          	    //alert(pageNO);
@@ -100,7 +100,7 @@
 	          
 	          
 	            
-             });*/
+             });
          });
 		 
       </script>

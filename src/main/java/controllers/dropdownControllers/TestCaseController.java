@@ -25,14 +25,15 @@ public class TestCaseController extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	/*String pgName = request.getParameter("pgNo");
+    	String pgID = request.getParameter("pgNo");
+    	int intPGID = Integer.parseInt(pgID);
         String jsonx = null;
         Connection cn = null;
         Statement st = null;
         ResultSet rs = null;
         Map<Integer, String> mps = new HashMap<Integer, String>();
         
-        String askTestCase = Queries.askTestScenerioName+pgName;
+        String askTestCase = Queries.askTestScenerioName(intPGID);
         
         try {
 			cn = Connections.getConnection();
@@ -49,7 +50,7 @@ public class TestCaseController extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
