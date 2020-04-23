@@ -30,7 +30,6 @@
          // Get the Test Scenerio of choosen state
          $('#page').click(function(event) {
          	    var pageNO = $("select#page").val();
-         	    //alert(pageNO);
          	    $.get('TestCaseController', {
          	            pgNo : pageNO
          	    }, function(response) {
@@ -55,7 +54,6 @@
 	             $.get('NavigationGraphController', {
 					appNM : applicationname, pgNo : pageNO,tcNo : testCsNO, dts : dtStart,dte : dtEnd,
 		  	    }, function(response) {
-		  	    	// alert("dick");
 		  	    	var x =response;
 		  	    	var arr = [];
 		  	    	$.each(x, function(index, value){
@@ -98,8 +96,29 @@
 			  	    	drawBasicss(max, min, avg);   	
 			  	    });
 	          
-	          
-	            
+	          // Element Wise Loading Time
+	            $.get('ElementLoadingTimeGraphController', {
+						appNM : applicationname, pgNo : pageNO,tcNo : testCsNO, dts : dtStart,dte : dtEnd,
+			  	    }, function(response) {
+			  	    //console.log(JSON.parse(response));
+		      	    	var x = response;
+		      	    	console.log(x);
+		      	    	var topStores='';
+		      	    	FusionCharts.ready(function(x) {
+		      	    		//var FusionCharts = require('fusioncharts');  
+		      	    		var xx = x;
+		      	    		console.log(xx);
+		      	    		var revenueChart = new FusionCharts({
+		                      type: 'scrollColumn2d',
+		                      renderAt: 'charter-container',
+		                      width: '1180',
+		                      height: '330',
+		                      dataFormat: 'json',
+		                      dataSource: response                   
+		                      
+		      	    }).render();
+		          });
+			  	    });
              });
          });
 		 
@@ -148,190 +167,7 @@
 							Times</div>
 						<div class="panel-body">
 							<frameset cols="30%, 40%, 30%">
-								<script type="text/javascript">
-                                    FusionCharts.ready(function() {
-                                    var revenueChart = new FusionCharts({
-                                      type: 'scrollColumn2d',
-                                      renderAt: 'charter-container',
-                                      width: '1180',
-                                      height: '330',
-                                      dataFormat: 'json',
-                                      dataSource: {
-                                        "chart": {
-                                          "theme": "fusion",
-                                          "yaxisname": "Loading Times (MiliSeconds)",
-                                          "showvalues": "1",
-                                          "placeValuesInside": "1",
-                                          "rotateValues": "1",
-                                          "valueFontColor": "#ffffff",
-                                          "numberprefix": "",
-                                          //number of visible plots
-                                          "numVisiblePlot": "15",
-                                          "showLabels": "0",
-                                          //Cosmetics
-                                          "labeldisplay": "WRAP",
-                                          "linethickness": "3",
-                                          "scrollheight": "10",
-                                          "flatScrollBars": "1",
-                                          "scrollShowButtons": "0",
-                                          "scrollColor": "#cccccc",
-                                          "showHoverEffect": "1"
-                                        },
-                                        "categories": [{
-                                          "category": [
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.png"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            },
-                                            {
-                                              "label": "https://mvnrepository.com/assets/images/6a606fcf7b8526f25d1fc9b3fe8f39ad-growth.jpg"
-                                            }
-                                          ]
-                                        }],
-                                        "dataset": [{
-                                          "data": [{
-                                              "value": "15"
-                                            },
-                                            {
-                                              "value": "29"
-                                            },
-                                            {
-                                              "value": "25"
-                                            },
-                                            {
-                                              "value": "26"
-                                            },
-                                            {
-                                              "value": "29"
-                                            },
-                                            {
-                                              "value": "32"
-                                            },
-                                            {
-                                              "value": "31"
-                                            },
-                                            {
-                                              "value": "31"
-                                            },
-                                            {
-                                              "value": "31"
-                                            },
-                                            {
-                                              "value": "37"
-                                            },
-                                            {
-                                              "value": "31"
-                                            },
-                                            {
-                                              "value": "31"
-                                            },
-                                            {
-                                              "value": "31"
-                                            },
-                                            {
-                                              "value": "36"
-                                            },
-                                            {
-                                              "value": "45"
-                                            },
-                                            {
-                                              "value": "33"
-                                            },
-                                            {
-                                              "value": "36"
-                                            },
-                                            {
-                                              "value": "32"
-                                            },
-                                            {
-                                              "value": "37"
-                                            },
-                                            {
-                                              "value": "38"
-                                            },
-                                            {
-                                              "value": "35"
-                                            },
-                                            {
-                                              "value": "23"
-                                            },
-                                            {
-                                              "value": "33"
-                                            },
-                                            {
-                                              "value": "38"
-                                            }
-                                          ]
-                                        }]
-                                      }
-                                    });
-                                    
-                                    revenueChart.render();
-                                    });
-                                    
-                                 </script>
+								
 								<div style="width: 1000px" id="charter-container"></div>
 							</frameset>
 						</div>

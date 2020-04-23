@@ -1,5 +1,7 @@
 package queryLibrary;
 
+import java.sql.Timestamp;
+
 public class Queries {
 
 	// Application Queries
@@ -114,5 +116,11 @@ public class Queries {
 	public static String askMinimumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
 		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceFinal].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
+	}
+	
+	// WebElements/ Resources Query
+	public static String askResources(int pgID, int tsID, int appID, String start, String end) {
+		String s = "select rm.Res_ID, rm.Res_Name, rmh.RS_Res_Duration from Resource_Master rm inner join Resource_Mapper_History rmh on rmh.RS_Res_ID = rm.Res_ID inner join (select Nav_Id as NVIDS from Navigation_Master where Nav_Page_ID="+pgID+" and Nav_TS_ID="+tsID+" and Nav_Application_ID="+appID+" and convert(Date,Nav_EntrySyetemTimes) between '"+ start +"' and '"+end+"') y on y.NVIDS = rmh.RS_Nav_ID";
+		return s;
 	}
 }
