@@ -86,9 +86,12 @@ public class Queries {
 
 
 	// DropDown Queries
-	public static String askApplicationname = "select * from [Performance].[dbo].[Application_Name]";
-	public static String askPageName = "select * from [Performance].[dbo].[Page_Name] where Application_ID=";
-	public static String askTestScenerioName = "select * from [Performance].[dbo].[TestScenario] where TestScenarioID=";
+	public static String askApplicationname = "select * from [PerformanceFinal].[dbo].[Application_Master]";
+	public static String askPageName(int apId) {
+		String s = "select  x.Page_ID, x.Page_Name from Page_Master x right join (select distinct a.Nav_page_ID as PGID from Navigation_Master a left join Application_Master b on b.Application_ID = a.Nav_Application_ID where b.Application_ID="+apId+") y on y.PGID = x.Page_ID";
+		return s;
+	}
+	public static String askTestScenerioName = "select * from [PerformanceFinal].[dbo].[TestScenario] where TestScenarioID=";
 
 	// Navigation Graph query
 	public static String askNavGraphQuery(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {

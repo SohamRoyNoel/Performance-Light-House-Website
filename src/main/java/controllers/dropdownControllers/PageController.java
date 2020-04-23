@@ -26,20 +26,21 @@ public class PageController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String applicationName = request.getParameter("ApplicationName");
+    	int intApID = Integer.parseInt(applicationName);
         String jsonx = null;
         Connection cn = null;
         Statement st = null;
         ResultSet rs = null;
         Map<Integer, String> mps = new HashMap<Integer, String>();
         
-        String askapplication = Queries.askPageName+applicationName;
+        String askapplication = Queries.askPageName(intApID);
         
         try {
 			cn = Connections.getConnection();
 			st = cn.createStatement();
 			rs = st.executeQuery(askapplication);
 			while(rs.next()) {
-				mps.put(rs.getInt(2), rs.getString(4));
+				mps.put(rs.getInt(1), rs.getString(2));
 			}
 			jsonx = new Gson().toJson(mps);
 			

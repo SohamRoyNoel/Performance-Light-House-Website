@@ -25,7 +25,7 @@ public class TestCaseController extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String pgName = request.getParameter("pgNo");
+    	/*String pgName = request.getParameter("pgNo");
         String jsonx = null;
         Connection cn = null;
         Statement st = null;
@@ -49,7 +49,7 @@ public class TestCaseController extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
