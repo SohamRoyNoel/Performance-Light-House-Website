@@ -41,7 +41,7 @@ public class TestScenarioBulkInsertion {
 			rs = st.executeQuery(queryAppId);
 
 			while(rs.next()) {
-				System.out.println("App name : " + rs.getString(2) + " Gotten Appname : " + Appname);
+//				System.out.println("App name : " + rs.getString(2) + " Gotten Appname : " + Appname);
 				if(Appname.equalsIgnoreCase(rs.getString(2))) {
 					apid = rs.getInt(1);
 				}
@@ -49,12 +49,12 @@ public class TestScenarioBulkInsertion {
 
 			// Check If User has Access to that application
 			String checkIfHasAccess = Queries.ifUserHasAccessWhileBulkUpload+userId;
-			System.out.println("QUERY : " + checkIfHasAccess);
+//			System.out.println("QUERY : " + checkIfHasAccess);
 			rs3 = st.executeQuery(checkIfHasAccess);
 			while(rs3.next()) {
-				System.out.println("R3 VALUE : " + rs3.getInt(2) + "aPPID : " + apid);
+//				System.out.println("R3 VALUE : " + rs3.getInt(2) + "aPPID : " + apid);
 				if (rs3.getInt(2) == apid) {
-					System.out.println("APP ID " + apid + " GET APP ID : " + rs3.getInt(2));
+//					System.out.println("APP ID " + apid + " GET APP ID : " + rs3.getInt(2));
 					access = true;
 				}
 			}

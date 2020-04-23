@@ -80,7 +80,7 @@ $(document).ready(function() {
  					let value = JSON.parse(json);
 					  var x1 = value.id;var x2 = value.tsnm;var x3 = value.userId;var x4 = value.date;var x5 = value.Button;//console.log(x1);
 					    ed += '<tr class="dels">';
-	 					ed += '<td>'+x1+'</td>';
+	 					ed += '<td id="api">'+x1+'</td>';
 	 					ed += '<td>'+x2+'</td>';
 	 					ed += '<td>'+x3+'</td>';
 	 					ed += '<td>'+x4+'</td>';
@@ -92,16 +92,64 @@ $(document).ready(function() {
      });
      });
 	
+	// Test case name update Controller
+	 $('#s').click(function(event) {
+		 var updateTCName = $("input#t").val();
+		 var row = _activeId;
+		 var rowTC = _activeTCname;		
+		 var rowOwner = _activeTCOwner;
+		 var appid = $("select#apps").val();
+		 var ov = "flase";
+		 $.get('UpdateTestCaseNameController', {
+        	 TCname : updateTCName, tsID : row, tsName : rowTC, owner : rowOwner, ap:appid, flag : ov,
+         }, function(response) {
+        	 $('body').append('<div style="display:none;">'+response+'</div>');
+        	var r = confirm($('#pqIds').val());
+        	
+        	if($('#pqIds').val() == 'It Seems The Test Scenario Has Other Owner. Do You Want To Override?' && r == true){
+        		$("input[type='hidden']").remove();
+        		ov = "true";
+        		$.get('UpdateTestCaseNameController', {
+        			TCname : updateTCName, tsID : row, tsName : rowTC, owner : rowOwner, ap:appid, flag : ov,
+                }, function(response) {
+                	$('body').append('<div style="display:none;">'+response+'</div>');
+                	alert($('#pqIds').val());
+                	$("#modalLoginForm").modal('hide');
+                });
+        	}        	
+        	$("input[type='hidden']").remove();
+        	$("#modalLoginForm").modal('hide');
+     	});
+	 });
 	
+	// Delete Test Case Name Controller
 	
 });
 
-function opener(){
+function opener(ctl){
+	
 	if(!$("#myTable11 tbody").length == 0){
 		$("#modalLoginForm").modal('show');	
-	}
-	
+		_row = $(ctl).parents("tr"); 
+
+		var cols = _row.children("td");	 
+
+		 var x = ctl.parentNode.parentNode.rowIndex;
+		 var tab = document.getElementById('myTable11');
+		 _activeId = tab.rows[x].cells[0].innerHTML;
+		 _activeTCname = tab.rows[x].cells[1].innerHTML;
+		 _activeTCOwner = tab.rows[x].cells[2].innerHTML;
+	}	
 }
+</script>
+
+<script>
+var _nextId = 1;
+var _activeId = 0;
+var _activeTCname = 0;
+var _activeTCOwner = 0;
+var _row = null;
+
 </script>
 <!-- <aside> -->
 <div id="sidebar" style="visibility: visible;" class="">
@@ -132,19 +180,15 @@ function opener(){
         <h4 class="modal-title w-100 font-weight-bold">Update Your TestCase Name and Application Name</h4>
       </div>
       <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="email" id="defaultForm-email" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="defaultForm-email">Application Name</label>
-        </div>
-
+        
         <div class="md-form mb-4">
-          <input type="password" id="defaultForm-pass" class="form-control validate">
+          <input type="text" id="t" class="form-control validate">
           <label data-error="wrong" data-success="right" for="defaultForm-pass">Testcase Name</label>
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-success">Update</button>
+        <button id="s" class="btn btn-success">Update</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
     </div>

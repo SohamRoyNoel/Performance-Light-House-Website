@@ -100,6 +100,18 @@
   	<description></description>
   	<servlet-class>controllers.updateControllers.UploadFileController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UpdateTestCaseNameController</servlet-name>
+  	<display-name>UpdateTestCaseNameController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.updateControllers.UpdateTestCaseNameController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteTestScenarioController</servlet-name>
+  	<display-name>DeleteTestScenarioController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.updateControllers.DeleteTestScenarioController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -164,6 +176,14 @@
   <servlet-mapping>
   	<servlet-name>UploadFileController</servlet-name>
   	<url-pattern>/UploadFileController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateTestCaseNameController</servlet-name>
+  	<url-pattern>/UpdateTestCaseNameController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteTestScenarioController</servlet-name>
+  	<url-pattern>/DeleteTestScenarioController</url-pattern>
   </servlet-mapping>
   
 </web-app>

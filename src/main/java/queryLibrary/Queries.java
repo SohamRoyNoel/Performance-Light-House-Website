@@ -49,7 +49,15 @@ public class Queries {
 		return r;
 	}
 	public static String ifUserHasAccessWhileBulkUpload = "select * from Application_User_Mapper where App_user_Reg_ID=";
-	
+	public static String updateTestScenarioByUser(int tsID, String oldTSName, String newTSName, int UserID) {
+		String s = "update TestScenario_Master set TS_Name='"+newTSName+"' , TS_Reg_UserID="+UserID+" where TS_ID = "+ tsID +" and TS_Name='"+oldTSName+"'";
+		return s;
+	}
+	public static String authenticateUserName(int id) {
+		String getUserId = "select * from [PerformanceFinal].[dbo].[User_Registration] where Reg_UserID="+id;
+		return getUserId;
+	}
+	public static String authTS = "select * from TestScenario_Master";
 	//public static String userNameById = "select Reg_UserName from User_Registration where Reg_UserID=";
 
 	// BasePage Queries
