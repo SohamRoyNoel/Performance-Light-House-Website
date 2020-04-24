@@ -99,16 +99,20 @@ $(document).ready(function() {
 		 var rowTC = _activeTCname;		
 		 var rowOwner = _activeTCOwner;
 		 var appid = $("select#apps").val();
-		 var ov = "flase";
+		 var ov = "false";
 		 $.get('UpdateTestCaseNameController', {
         	 TCname : updateTCName, tsID : row, tsName : rowTC, owner : rowOwner, ap:appid, flag : ov,
          }, function(response) {
         	 $('body').append('<div style="display:none;">'+response+'</div>');
         	var r = confirm($('#pqIds').val());
-        	
-        	if($('#pqIds').val() == 'It Seems The Test Scenario Has Other Owner. Do You Want To Override?' && r == true){
+        	console.log("R : " + r);
+        	var c = $('#pqIds').val();
+        	var x ="It Seems The Test Scenario Has Other Owner. Do You Want To Take Ownership?";
+        	var t = "true";
+        	if($('#pqIds').val() == x && r == true){
         		$("input[type='hidden']").remove();
         		ov = "true";
+        		
         		$.get('UpdateTestCaseNameController', {
         			TCname : updateTCName, tsID : row, tsName : rowTC, owner : rowOwner, ap:appid, flag : ov,
                 }, function(response) {
@@ -116,6 +120,8 @@ $(document).ready(function() {
                 	alert($('#pqIds').val());
                 	$("#modalLoginForm").modal('hide');
                 });
+        	}else{
+            	console.log("llll : ");
         	}        	
         	$("input[type='hidden']").remove();
         	$("#modalLoginForm").modal('hide');

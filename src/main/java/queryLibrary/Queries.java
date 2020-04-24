@@ -1,8 +1,16 @@
 package queryLibrary;
 
-import java.sql.Timestamp;
-
 public class Queries {
+	
+	/**
+	 ******************************************************************************************************************************************************************************************* 
+	 * 
+	 * 
+	 * Public QUERIES
+	 * 
+	 * 
+	 ********************************************************************************************************************************************************************************************
+	 */
 
 	// Application Queries
 	public static String getAllApplications = "select * from Application_Master";
@@ -59,7 +67,8 @@ public class Queries {
 		String getUserId = "select * from [PerformanceFinal].[dbo].[User_Registration] where Reg_UserID="+id;
 		return getUserId;
 	}
-	public static String authTS = "select * from TestScenario_Master";
+	public static String authTS = "select * from [PerformanceFinal].[dbo].[TestScenario_Master]";
+	public static String authTS1 = "select * from [PerformanceFinal].[dbo].[TestScenario_Master]";
 	//public static String userNameById = "select Reg_UserName from User_Registration where Reg_UserID=";
 
 	// BasePage Queries
@@ -123,4 +132,19 @@ public class Queries {
 		String s = "select rm.Res_ID, rm.Res_Name, rmh.RS_Res_Duration from Resource_Master rm inner join Resource_Mapper_History rmh on rmh.RS_Res_ID = rm.Res_ID inner join (select Nav_Id as NVIDS from Navigation_Master where Nav_Page_ID="+pgID+" and Nav_TS_ID="+tsID+" and Nav_Application_ID="+appID+" and convert(Date,Nav_EntrySyetemTimes) between '"+ start +"' and '"+end+"') y on y.NVIDS = rmh.RS_Nav_ID";
 		return s;
 	}
+	
+	/**
+	 ******************************************************************************************************************************************************************************************* 
+	 * 
+	 * 
+	 * ADMIN QUERIES
+	 * 
+	 * 
+	 ********************************************************************************************************************************************************************************************
+	 */
+	
+	public static String getUserCountForAdmin = "select COUNT(*) from User_Registration";
+	public static String getApplicationCountForAdmin = "select COUNT(*) from Application_Master";
+	public static String getPageCountForAdmin = "select COUNT(*) from Page_Master";
+	public static String getTSCountForAdmin = "select COUNT(*) from TestScenario_Master";
 }

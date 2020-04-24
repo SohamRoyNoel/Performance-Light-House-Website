@@ -41,7 +41,7 @@ public class UpdateTestCaseNameController extends HttpServlet {
 		int intApp = Integer.parseInt(applicationID);
 		String flagParameter = request.getParameter("flag");
 		boolean boolsFlag = Boolean.parseBoolean(flagParameter);
-
+		
 		String tcOwner = request.getParameter("owner");
 		HttpSession session=request.getSession(false);  
 		String userID=(String)session.getAttribute("LoginID");
@@ -51,6 +51,7 @@ public class UpdateTestCaseNameController extends HttpServlet {
 		Connection cn = null;
 		PrintWriter out = response.getWriter();
 		ResultSet rs = null;
+		ResultSet rs1 = null;
 		Statement st = null;
 		boolean auth = false;
 		String Status = "Update";
@@ -60,8 +61,36 @@ public class UpdateTestCaseNameController extends HttpServlet {
 
 		try {
 			cn = Connections.getConnection();
-			if (boolsFlag == false) {			
+			if (boolsFlag) {
+				Statement st1 = null;
+				Boolean ifExists = true;
+				// Check If TestScenario already Exists
+				//rs1 = st1.executeQuery();
+				String sql = Queries.authTS1;
+				st = cn.createStatement();
+				rs1 = st.executeQuery(sql);
+				while(rs1.next()) {
+					if(rs1.getString(2).equals(tcName) && rs1.getInt(3) == intApp) {
+						ifExists = false;
+					}
+				}
+				if(ifExists) {
+					String getTsid = Queries.updateTestScenarioByUser(intTsID, oldTcName, tcName, intUID);
+					Statement sts = cn.createStatement();
+					sts.executeUpdate(getTsid);
 
+					// Update History
+					updateHistoryTable(cn, intTsID, tcName, intApp, intUID, Status, timestamps);
+
+					String ad = "Test Case Name Updated Successfully";
+					out.write("<input type='hidden' id='pqIds' value='"+ad+"'/>");
+					
+				} else {
+					String ad = "Conflicted TestCase Name For This Application; Please Try to use Different Name!";
+					out.write("<input type='hidden' id='pqIds' value='"+ad+"'/>");
+				}
+				
+			} else {
 				// check user is the owner
 				String sql = Queries.authenticateUserName(intUID);
 				st = cn.createStatement();
@@ -100,36 +129,11 @@ public class UpdateTestCaseNameController extends HttpServlet {
 					String ad = "It Seems The Test Scenario Has Other Owner. Do You Want To Take Ownership?";
 					out.write("<input type='hidden' id='pqIds' value='"+ad+"'/>");
 				}
-			} else {
-				Boolean ifExists = true;
-				// Check If TestScenario already Exists
-				rs = st.executeQuery(Queries.authTS);
-				while(rs.next()) {
-					if(rs.getString(2).equals(tcName) && rs.getInt(3) == intApp) {
-//						DBTC = rs.getString(2);
-//						TS_AppID = rs.getInt(3);
-						ifExists = false;
-					}
-				}
-				if(ifExists) {
-					String getTsid = Queries.updateTestScenarioByUser(intTsID, oldTcName, tcName, intUID);
-					Statement sts = cn.createStatement();
-					sts.executeUpdate(getTsid);
-
-					// Update History
-					updateHistoryTable(cn, intTsID, tcName, intApp, intUID, Status, timestamps);
-
-					String ad = "Test Case Name Updated Successfully";
-					out.write("<input type='hidden' id='pqIds' value='"+ad+"'/>");
-				} else {
-					String ad = "Conflicted TestCase Name For This Application; Please Try to use Different Name!";
-					out.write("<input type='hidden' id='pqIds' value='"+ad+"'/>");
-				}
 				
 			}
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 	}

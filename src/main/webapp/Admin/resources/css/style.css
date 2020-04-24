@@ -41,7 +41,7 @@ label{
 .side-bar {
 	background:#1C445F;
 	padding:0;
-	min-height: 2500px;
+	min-height: 100px;
 	width:22%;
 	margin-right:2%;
 }
@@ -1734,7 +1734,7 @@ button#focus-single,button#focus-multiple,button#focus-coords,button#focus-init 
 		left: -48px;
 	}
 	.side-bar {
-		min-height: 2200px;
+		height: 100px;
 	}
 	.world-map {
 		padding: 1.4em 1em 0 1em;
@@ -1759,7 +1759,7 @@ button#focus-single,button#focus-multiple,button#focus-coords,button#focus-init 
 	.side-bar {
 		margin-right: 0;
 		width: 100%;
-		min-height: 0;
+		height: 0;
 		margin-bottom:3em;
 	}
 	.logo a img {
