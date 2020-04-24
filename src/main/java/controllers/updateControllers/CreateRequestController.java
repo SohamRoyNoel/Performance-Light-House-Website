@@ -35,7 +35,11 @@ public class CreateRequestController extends HttpServlet {
 
 		try {
 			cn = Connections.getConnection();
-			st = cn.createStatement();			
+			st = cn.createStatement();		
+			/* Check if Request already existing for the APP with Same UserID with STATUS = PENDING
+			*  and where the request for the UserID is not already REJECTED
+			*/
+			
 			// Insert The Application request  to "Application_request_mapper"
 			if (flag) {
 				String insertReq = Queries.addNewApplicationRequest;
