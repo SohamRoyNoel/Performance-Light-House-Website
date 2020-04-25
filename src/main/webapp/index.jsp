@@ -42,7 +42,7 @@
 								Website <span>Performance LightHouse</span>
 							</h2>
 							<h4>Analyse Your Website Performance History Efficiently</h4>
-							<a href="Dashboard.jsp" class="btn_1">Go To Performance
+							<a href="Login.jsp" class="btn_1">Go To Performance
 								Dashboard <i class="ti-angle-right"></i>
 							</a>
 						</div>

@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import connectionFactory.Connections;
 import queryLibrary.Queries;
 
@@ -79,9 +77,6 @@ public class LoginController extends HttpServlet {
 					requestDispatcher.forward(request, response);
 				}
 
-//				RequestDispatcher requestDispatcher = request
-//						.getRequestDispatcher("/Application.jsp");
-//				requestDispatcher.forward(request, response);
 			} else {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
