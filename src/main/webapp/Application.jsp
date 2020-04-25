@@ -39,6 +39,7 @@ $(document).ready(function() {
 	        });
       });
 	
+	
 	 // Add Test Case Controller
 	 $('#tcsm').click(function(event) {
 		 var aNO = $("select#apps").val();
@@ -291,7 +292,7 @@ var _row = null;
 					    <td class="appId"><%=resultset.getInt(1)%></td>
 					    <td class="apNm"><%=resultset.getString(2)%></td>
 					    <td><%=resultset.getString(3)%></td>
-					    <td><button type="button" id="req" class="btn btn-warning xx"><i class="fa fa-question-circle" aria-hidden="true"></i></button></td>
+					    <td><button type="button" id="reqs" class="btn btn-warning xx"><i class="fa fa-question-circle" aria-hidden="true"></i></button></td>
 					  </tr>
 					  <%
 				            }

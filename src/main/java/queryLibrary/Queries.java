@@ -147,4 +147,16 @@ public class Queries {
 	public static String getApplicationCountForAdmin = "select COUNT(*) from Application_Master";
 	public static String getPageCountForAdmin = "select COUNT(*) from Page_Master";
 	public static String getTSCountForAdmin = "select COUNT(*) from TestScenario_Master";
+	
+	// Admin Application Request Mapper
+	public static String getUserIdToAcceptRequest(String em, String uname) {
+		String s = "select Reg_UserID from User_Registration where Reg_Email='"+em+"' and Reg_UserName='"+uname+"'";
+		return s;
+	}
+	public static String updateRequestMapper(int approvedBYRegId, int reqID, String AppName, int reqBYRegID) {
+		String s = "update Application_Request_Mapper set Request_App_ApprovedBy_Reg_UserID="+ approvedBYRegId +", Request_Status='Approved' where Request_ID="+ reqID +" and Request_App_Name='"+AppName+"' and Request_App_By_Reg_UserID="+reqBYRegID;
+		return s;
+	}
+	public static String GiveAccess = "insert into Application_User_Mapper (App_Application_ID, App_user_Reg_ID) values (?,?)";
+	public static String getrequestForAdmin = "(select b.Request_ID, b.Request_App_Name, a.Reg_UserName, a.Reg_Email, (select Reg_F_Name+' '+Reg_L_Name+' as '+Reg_UserName from User_Registration where Reg_UserID = b.Request_App_ApprovedBy_Reg_UserID), b.Request_Status from Application_Request_Mapper b left join User_Registration a on a.Reg_UserID=b.Request_App_By_Reg_UserID) order by b.Request_Status desc";
 }
