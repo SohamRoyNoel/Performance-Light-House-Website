@@ -148,6 +148,7 @@ function opener(ctl){
 		 _activeTCOwner = tab.rows[x].cells[2].innerHTML;
 	}	
 }
+
 </script>
 
 <script>
@@ -156,6 +157,7 @@ var _activeId = 0;
 var _activeTCname = 0;
 var _activeTCOwner = 0;
 var _row = null;
+
 
 </script>
 <!-- <aside> -->
@@ -283,16 +285,25 @@ var _row = null;
 							String userID=(String)sessions.getAttribute("LoginID");
 							
 							int UID = Integer.parseInt(userID);
-							System.out.println("Hello : "+UID);
 				         	resultset = statement.executeQuery(Queries.getAppNameWithStatus(UID));
-				         	System.out.println("Query : " + Queries.getAppNameWithStatus(UID) );
 				         	while (resultset.next()) {
 				         %>
 					  <tr style="border: none;">
 					    <td class="appId"><%=resultset.getInt(1)%></td>
 					    <td class="apNm"><%=resultset.getString(2)%></td>
 					    <td><%=resultset.getString(3)%></td>
+					    <%
+					    	String sts = resultset.getString(3);
+					    	if(sts.trim().equals("Take Access")){
+					    %>
 					    <td><button type="button" id="reqs" class="btn btn-warning xx"><i class="fa fa-question-circle" aria-hidden="true"></i></button></td>
+					    <%
+					    	} else {
+					    %>
+					    <td><button disabled type="button" id="reqs" class="btn btn-warning xx"><i class="fa fa-question-circle" aria-hidden="true"></i></button></td>
+					    <%
+					    	}
+					    %>
 					  </tr>
 					  <%
 				            }

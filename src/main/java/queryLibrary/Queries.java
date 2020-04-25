@@ -31,11 +31,15 @@ public class Queries {
 		String q = "select Application_ID, Application_Name,Status from ("+
 				"select Application_ID, Application_Name,Status, ROW_NUMBER() over (partition by Application_Name  order by Status) as row_num  from (SELECT a.application_id,a.application_name,"+
 				"case when (Request_App_By_Reg_UserID="+UID+") then "+
-				"b.request_status else 'take Access'"+
+				"b.request_status else 'Take Access'"+
 				"end as status from application_master a "+
 				"left join Application_Request_Mapper b on "+
 				"a.Application_Name=b.Request_App_Name) x )b where row_num=1 order by Application_Name";
 		return q;
+	}
+	public static String requestButton(int uID, String apName) {
+		String s = "select * from Application_Request_Mapper where Request_App_By_Reg_UserID="+uID+" and Request_App_Name='"+ apName +"'";
+		return s;
 	}
 	
 	// Test cases
@@ -153,8 +157,8 @@ public class Queries {
 		String s = "select Reg_UserID from User_Registration where Reg_Email='"+em+"' and Reg_UserName='"+uname+"'";
 		return s;
 	}
-	public static String updateRequestMapper(int approvedBYRegId, int reqID, String AppName, int reqBYRegID) {
-		String s = "update Application_Request_Mapper set Request_App_ApprovedBy_Reg_UserID="+ approvedBYRegId +", Request_Status='Approved' where Request_ID="+ reqID +" and Request_App_Name='"+AppName+"' and Request_App_By_Reg_UserID="+reqBYRegID;
+	public static String updateRequestMapper(int approvedBYRegId, int reqID, String AppName, int reqBYRegID, String status) {
+		String s = "update Application_Request_Mapper set Request_App_ApprovedBy_Reg_UserID="+ approvedBYRegId +", Request_Status='"+status+"' where Request_ID="+ reqID +" and Request_App_Name='"+AppName+"' and Request_App_By_Reg_UserID="+reqBYRegID;
 		return s;
 	}
 	public static String GiveAccess = "insert into Application_User_Mapper (App_Application_ID, App_user_Reg_ID) values (?,?)";

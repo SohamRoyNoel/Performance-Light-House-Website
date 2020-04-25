@@ -24,6 +24,7 @@ $(document).ready(function() {
 	       	 a: apID, b:apName, c:apUserName, d:apEmail,
 	        }, function(response) {
 	        	alert("Access is Granted");
+	        	$('#example').DataTable().ajax.reload();
 	        });
 	});
  
@@ -32,12 +33,13 @@ $(document).ready(function() {
 		var apID = _activeId;
 		var apName = _activeAPname;
 		var apUserName = _activeUSEROwner;
+		var apEmail = _activeUSEROwnerName;
 		
-		$.get('RequestController', {
-	       	 ApplicationName : apName
+		$.get('../AdminRejectController', {
+			a: apID, b:apName, c:apUserName, d:apEmail,
 	        }, function(response) {
-	        	alert("Requested Application is Accepted, Waiting For Approval"); 
-	        	//$('#example').DataTable().ajax.reload();
+	        	alert("You have Rejected the request"); 
+	        	$('.p').DataTable().ajax.reload();
 	        	// var url = 'UserRequests.jsp';
 	        	 //$('#example').load(url + ' #example');
 	        });
@@ -109,7 +111,7 @@ function opener(ctl){
             	<%
                 	}else{
             	%>
-            	<td><button type='button' disabled onClick='opener(this);' class='btn btn-warning'>Grant Access <i class="far fa-check-circle"></i></button> &nbsp&nbsp <button type='button' onClick='opener(this);' id='reject' class='btn btn-danger'>Revoke Access <i class="far fa-times-circle"></i></button></td>
+            	<td><button type='button' disabled onClick='opener(this);' class='btn btn-warning'>Grant Access <i class="far fa-check-circle"></i></button> &nbsp&nbsp <button type='button' disabled onClick='opener(this);' id='reject' class='btn btn-danger'>Revoke Access <i class="far fa-times-circle"></i></button></td>
             	<%
                 	}
             	%>

@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 import connectionFactory.Connections;
 import queryLibrary.Queries;
 
-public class AdminAcceptController extends HttpServlet {
+public class AdminRejectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public AdminAcceptController() {
+    public AdminRejectController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -69,17 +69,12 @@ public class AdminAcceptController extends HttpServlet {
 				requestUID = rs.getInt(1);
 			}
 			// Update Approved on Request Mapper
-			String status = "Approved";
+			String status = "Denied";
 	        String askTestCase = Queries.updateRequestMapper(intApproverId, intreqID, AppName, requestUID, status);
 	        Statement sts = cn.createStatement();
 			sts.executeUpdate(askTestCase);
 			
-			// Give Permission : Add a row to Application_user_mapper
-			PreparedStatement preparedStatement1 = cn.prepareStatement(Queries.GiveAccess);
-			System.out.println("For user id : " + requestUID);
-			preparedStatement1.setInt(1, targetappID);
-			preparedStatement1.setInt(2, requestUID);
-			preparedStatement1.executeUpdate();
+			
 			
 
 		} catch (Exception e) {
