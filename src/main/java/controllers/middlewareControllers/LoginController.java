@@ -29,16 +29,18 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String emails = request.getParameter("email");
 		String passwords = request.getParameter("password");
-		System.out.println("Email : "+ emails);
-		System.out.println("Ps : "+ passwords);
+		String chkBox = request.getParameter("admins");
+		System.out.println("CheckBox value : " + chkBox);
 		Connection cn = null;
 		Statement st = null;
 		ResultSet rs = null;
 		boolean flag = false;
+		boolean detAdmin = false;
 		String jsonx = null;
+		String admin = "";
 
 		Map<String, String> maps = new HashMap<String, String>();
 		String askTestCase = Queries.loginUser(emails, passwords);
@@ -54,58 +56,59 @@ public class LoginController extends HttpServlet {
 					flag = true;
 					getLoginId = rs.getInt(1);
 					Id = String.valueOf(getLoginId);
+					admin = rs.getString(10);
+					if (admin.equals("Admin")) {
+						detAdmin = true;
+					}
 				}
 			}
 
-			System.out.println("Flag : "+ flag);
-			
 			if (flag) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LoginID", Id);
-				System.out.println("Success");
-				System.out.println("path : " + request.getContextPath());
 				String x = getServletContext().getRealPath("Base.jsp");
-				System.out.println("Paths : " + x);
-				RequestDispatcher requestDispatcher = request
-	                    .getRequestDispatcher("/Application.jsp");
-	            requestDispatcher.forward(request, response);
-//				response.sendRedirect("/PerformanceWebFramework/Application.jsp");
-//				response.sendRedirect(request.getSession().getServletContext().getRealPath("/Application.jsp"));
+
+				if (chkBox != null && detAdmin == true) {
+//					RequestDispatcher requestDispatcher = request
+//							.getRequestDispatcher("/Admin/Admin.jsp");
+//					requestDispatcher.forward(request, response);
+					response.sendRedirect(request.getContextPath() + "/Admin/Admin.jsp");
+				} else {
+					RequestDispatcher requestDispatcher = request
+							.getRequestDispatcher("/Application.jsp");
+					requestDispatcher.forward(request, response);
+				}
+
+//				RequestDispatcher requestDispatcher = request
+//						.getRequestDispatcher("/Application.jsp");
+//				requestDispatcher.forward(request, response);
 			} else {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
 				out.write("<html> <body> <div id='xyz' style='text-align: center;'>");
 				out.write("<p id='errmsg'>");
 				String greetings = "Incorrect CredentialsSS";
-				System.out.println(greetings);
-				
-				out.print(greetings);
-				
+
+				out.print(greetings);				
+
 				RequestDispatcher requestDispatchers = request
-	                    .getRequestDispatcher("/Login.jsp");
-	            requestDispatchers.include(request, response);
-	            out.close();
+						.getRequestDispatcher("/Login.jsp");
+				requestDispatchers.include(request, response);
+				out.close();
 			}
 
-			
+
 
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		processRequest(request, response);
-////		doPost(request, response);
-//	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
-//		doGet(request, response);
-//		response.sendRedirect(request.getSession().getServletContext().getRealPath("/Application.jsp"));
-
 	}
 
 }

@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
-<p class="home"><a href="#">Home</a> > <strong> Test Case Details</strong></p>
+<p class="home"><a href="#">Home</a> > <strong> Test Cases</strong></p>
 <br>
 
 <table id="example" class="display" style="width:100%; height:700px">
