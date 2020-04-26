@@ -5,6 +5,22 @@
 <script>
 $(document).ready(function() {
     $('#example').DataTable();
+    
+    $('#apper').click(function(event) {
+ 	    var ap = $("input#exampleInputEmail1").val();
+ 	    if (ap == '') {
+			alert("Application Name Can Not Remain Blank.")
+		}else {
+			 $.get('../AdminAddAppController', {
+	 	            apNM : ap,
+	 	    }, function(response) {
+	 	    	alert($('#pqId').val());
+	 	    	$("input[type='hidden']").remove();
+	 	    });
+		}
+ 	   
+     });
+    
 } );
 </script>
 <p class="home"><a href="#">Home</a> > <strong> Add Applications</strong></p>
@@ -12,10 +28,10 @@ $(document).ready(function() {
 <form>
   <div class="form-group">
     <label for="exampleInputEmail1">Add Application</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Application">
     <small id="emailHelp" class="form-text text-muted">This Application will be created but, User has to raise request to use it.</small>
   </div>
-  <button type="submit" class="btn btn-primary">Submit Your Application</button>
+  <button type="submit" id="apper" class="btn btn-primary">Submit Your Application</button>
 </form>
 <br>
 <table id="example" class="display" style="width:100%; height:700px">

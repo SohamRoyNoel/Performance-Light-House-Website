@@ -26,7 +26,7 @@ public class Queries {
 		String getAllApplication = "select a.Application_Name, a.Application_Id from Application_Master a left join Application_User_Mapper b on a.Application_ID=b.App_Application_ID where b.App_user_Reg_ID="+UID;
 		return getAllApplication;
 	}
-	public static String addNewApplicationRequest = "insert into [PerformanceFinal].[dbo].[Application_Request_Mapper] ([Request_App_Name],[Request_App_By_Reg_UserID], [Request_App_ApprovedBy_Reg_UserID], [Request_Status]) values (?,?,?,?)";
+	public static String addNewApplicationRequest = "insert into [PerformanceDatabase].[dbo].[Application_Request_Mapper] ([Request_App_Name],[Request_App_By_Reg_UserID], [Request_App_ApprovedBy_Reg_UserID], [Request_Status]) values (?,?,?,?)";
 	public static String getAppNameWithStatus(int UID) {
 		String q = "select Application_ID, Application_Name,Status from ("+
 				"select Application_ID, Application_Name,Status, ROW_NUMBER() over (partition by Application_Name  order by Status) as row_num  from (SELECT a.application_id,a.application_name,"+
@@ -68,11 +68,11 @@ public class Queries {
 		return s;
 	}
 	public static String authenticateUserName(int id) {
-		String getUserId = "select * from [PerformanceFinal].[dbo].[User_Registration] where Reg_UserID="+id;
+		String getUserId = "select * from [PerformanceDatabase].[dbo].[User_Registration] where Reg_UserID="+id;
 		return getUserId;
 	}
-	public static String authTS = "select * from [PerformanceFinal].[dbo].[TestScenario_Master]";
-	public static String authTS1 = "select * from [PerformanceFinal].[dbo].[TestScenario_Master]";
+	public static String authTS = "select * from [PerformanceDatabase].[dbo].[TestScenario_Master]";
+	public static String authTS1 = "select * from [PerformanceDatabase].[dbo].[TestScenario_Master]";
 	//public static String userNameById = "select Reg_UserName from User_Registration where Reg_UserID=";
 
 	// BasePage Queries
@@ -83,25 +83,25 @@ public class Queries {
 
 
 	// Security Questions
-	public static String askSecurityQuestion = "select * from [PerformanceFinal].[dbo].[Security_Questions]";
+	public static String askSecurityQuestion = "select * from [PerformanceDatabase].[dbo].[Security_Questions]";
 
 	// Register an User
-	public static String askRegisterUser = "select * from [PerformanceFinal].[dbo].[User_Registration]";
+	public static String askRegisterUser = "select * from [PerformanceDatabase].[dbo].[User_Registration]";
 	public static String registerUser() {
-		String r = "INSERT INTO [PerformanceFinal].[dbo].[User_Registration] ([Reg_F_Name],[Reg_L_Name],[Reg_UserName],[Reg_Email],[Reg_Password],[Reg_API_KEY],[Reg_Security_Qus_ID],[Reg_Security_Qus_Ans], [Reg_User_Type])VALUES(?,?,?,?,?,?,?,?,?)";
+		String r = "INSERT INTO [PerformanceDatabase].[dbo].[User_Registration] ([Reg_F_Name],[Reg_L_Name],[Reg_UserName],[Reg_Email],[Reg_Password],[Reg_API_KEY],[Reg_Security_Qus_ID],[Reg_Security_Qus_Ans], [Reg_User_Type])VALUES(?,?,?,?,?,?,?,?,?)";
 		return r;
 	}
 
 	// Login an User
 	public static String loginUser(String email, String password) {
-		String r = "select * from [PerformanceFinal].[dbo].[User_Registration] where Reg_Email='"+email+"' and Reg_Password='"+password+"'";
+		String r = "select * from [PerformanceDatabase].[dbo].[User_Registration] where Reg_Email='"+email+"' and Reg_Password='"+password+"'";
 		return r;
 	}
 
 
 
 	// DropDown Queries
-	public static String askApplicationname = "select * from [PerformanceFinal].[dbo].[Application_Master]";
+	public static String askApplicationname = "select * from [PerformanceDatabase].[dbo].[Application_Master]";
 	public static String askPageName(int apId) {
 		String s = "select  x.Page_ID, x.Page_Name from Page_Master x right join (select distinct a.Nav_page_ID as PGID from Navigation_Master a left join Application_Master b on b.Application_ID = a.Nav_Application_ID where b.Application_ID="+apId+") y on y.PGID = x.Page_ID";
 		return s;
@@ -113,21 +113,21 @@ public class Queries {
 
 	// Navigation Graph query
 	public static String askNavGraphQuery(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select AVG(CONVERT(FLOAT,Nav_UnloadEvent)), AVG(CONVERT(FLOAT,Nav_RedirectEvent)), AVG(CONVERT(FLOAT,Nav_AppCache)), AVG(CONVERT(FLOAT,Nav_TTFB)),AVG(CONVERT(FLOAT,Nav_Processing)),AVG(CONVERT(FLOAT,Nav_DomInteractive)),AVG(CONVERT(FLOAT,Nav_DomComplete)),AVG(CONVERT(FLOAT,Nav_ContentLoad)),AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceFinal].[dbo].[Navigation_Master] where Nav_TS_ID="+testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '" + dtStart +"' and '"+dtEnd+"'";
+		String q = "select AVG(CONVERT(FLOAT,Nav_UnloadEvent)), AVG(CONVERT(FLOAT,Nav_RedirectEvent)), AVG(CONVERT(FLOAT,Nav_AppCache)), AVG(CONVERT(FLOAT,Nav_TTFB)),AVG(CONVERT(FLOAT,Nav_Processing)),AVG(CONVERT(FLOAT,Nav_DomInteractive)),AVG(CONVERT(FLOAT,Nav_DomComplete)),AVG(CONVERT(FLOAT,Nav_ContentLoad)),AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '" + dtStart +"' and '"+dtEnd+"'";
 		return q;
 	}
 
 	// Page Load Event Queries
 	public static String askAveragePageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceFinal].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
+		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 	public static String askMaximumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select MAX(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceFinal].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
+		String q = "select MAX(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 	public static String askMinimumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
-		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceFinal].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
+		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 	
@@ -163,4 +163,6 @@ public class Queries {
 	}
 	public static String GiveAccess = "insert into Application_User_Mapper (App_Application_ID, App_user_Reg_ID) values (?,?)";
 	public static String getrequestForAdmin = "(select b.Request_ID, b.Request_App_Name, a.Reg_UserName, a.Reg_Email, (select Reg_F_Name+' '+Reg_L_Name+' as '+Reg_UserName from User_Registration where Reg_UserID = b.Request_App_ApprovedBy_Reg_UserID), b.Request_Status from Application_Request_Mapper b left join User_Registration a on a.Reg_UserID=b.Request_App_By_Reg_UserID) order by b.Request_Status desc";
+	public static String addApplicationForAdmin = "insert into Application_Master (Application_Name, Application_Reg_Admin_UserID, Application_CreationTime) values (?,?,?)";
+	public static String checkIfAPPExistsForAdmin = "select * from Application_Master";
 }

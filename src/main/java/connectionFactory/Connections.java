@@ -13,7 +13,7 @@ public class Connections {
 
 		String ClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 		String IPAddr = "DESKTOP-LHLA0PA;";
-		String DBName="PerformanceFinal";
+		String DBName="PerformanceDatabase";
 		String DB_URL = "jdbc:sqlserver://" + IPAddr + "DatabaseName=" + DBName + ";integratedSecurity=true" ;
 		Connection con=null;
 		try {

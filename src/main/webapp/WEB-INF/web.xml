@@ -142,6 +142,12 @@
   	<description></description>
   	<servlet-class>controllers.AdminRequestRejectControllers.AdminRejectController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>AdminAddAppController</servlet-name>
+  	<display-name>AdminAddAppController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.AdminAddAppControllers.AdminAddAppController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -234,6 +240,10 @@
   <servlet-mapping>
   	<servlet-name>AdminRejectController</servlet-name>
   	<url-pattern>/AdminRejectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AdminAddAppController</servlet-name>
+  	<url-pattern>/AdminAddAppController</url-pattern>
   </servlet-mapping>
   
 </web-app>
