@@ -30,7 +30,6 @@ public class AdminAddAppController extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("HIT");
 		String applicationNM = request.getParameter("apNM");
 		HttpSession session=request.getSession(false);  
 		String userID=(String)session.getAttribute("LoginID");
