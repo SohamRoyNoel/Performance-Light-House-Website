@@ -231,12 +231,20 @@ var _row = null;
             $("#modalSureForm").modal('show');
         });
     });
+    
+    function copy() {
+    	  var copyText = document.getElementById("lol");
+    	  copyText.select();
+    	  copyText.setSelectionRange(0, 99999)
+    	  document.execCommand("copy");
+    	  alert("Api key is copied");
+    	}
 </script>
 <!-- </popup Update> -->
 
 <section id="main-content">
 	<section class="wrapper">
-<br><br>
+<br><br>style="height: 40px; width: 300px; float:right"
 	<!-- Classic tabs -->
 <div id="exTab2" class="">	
 <ul class="nav nav-tabs">
@@ -245,8 +253,30 @@ var _row = null;
 			</li>
 			<li><a href="#2" data-toggle="tab">Test Cases</a>
 			</li>
+			<%
+					try{
+						Connection connection = Connections.getConnection();
+			         	Statement statement = connection.createStatement();
+			         	HttpSession sessions=request.getSession(false);  
+			    		String userID=(String)sessions.getAttribute("LoginID");
+			    		int intUID = Integer.parseInt(userID);
+			    		String apiKEY = "";
+			         	resultset = statement.executeQuery(Queries.authenticateUserName(intUID));
+			         	while (resultset.next()) {
+			         		apiKEY = resultset.getString(7);
+			         	}
+					
+				%>
+			<li><input type="text" readonly  style="height: 40px; width: 300px;" value="<%=apiKEY %>" id="lol"><button type="button" style="height: 40px; width: 60px; float:right" onclick='copy();' id="sp" class="btn btn-outline-primary">Copy</button>
+			
+			</li>
+			<%
+			         	}catch(Exception e){
+							e.printStackTrace();
+						}
+					%>
 		</ul>
-
+			
 			<div class="tab-content ">
 			  <div class="tab-pane active" id="1">
 			  

@@ -111,7 +111,7 @@ function opener(ctl){
             	<%
                 	}else{
             	%>
-            	<td><button type='button' disabled onClick='opener(this);' class='btn btn-warning'>Grant Access <i class="far fa-check-circle"></i></button> &nbsp&nbsp <button type='button' disabled onClick='opener(this);' id='reject' class='btn btn-danger'>Revoke Access <i class="far fa-times-circle"></i></button></td>
+            	<td><button type='button' disabled onClick='opener(this);' class='btn btn-warning'>Grant Access <i class="far fa-check-circle"></i></button> &nbsp&nbsp <button type='button' onClick='opener(this);' id='reject' class='btn btn-danger'>Revoke Access <i class="far fa-times-circle"></i></button></td>
             	<%
                 	}
             	%>
