@@ -166,6 +166,18 @@
   	<description></description>
   	<servlet-class>controllers.AdminAddAdminControllers.AdminRemovesAdminController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>AdminDeleteApplication</servlet-name>
+  	<display-name>AdminDeleteApplication</display-name>
+  	<description></description>
+  	<servlet-class>controllers.AdminAddAppControllers.AdminDeleteApplication</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AdminRetriveApplicationController</servlet-name>
+  	<display-name>AdminRetriveApplicationController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.AdminAddAppControllers.AdminRetriveApplicationController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -274,6 +286,14 @@
   <servlet-mapping>
   	<servlet-name>AdminRemovesAdminController</servlet-name>
   	<url-pattern>/AdminRemovesAdminController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AdminDeleteApplication</servlet-name>
+  	<url-pattern>/AdminDeleteApplication</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AdminRetriveApplicationController</servlet-name>
+  	<url-pattern>/AdminRetriveApplicationController</url-pattern>
   </servlet-mapping>
   
 </web-app>

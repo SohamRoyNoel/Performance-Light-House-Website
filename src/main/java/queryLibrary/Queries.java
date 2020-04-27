@@ -164,6 +164,19 @@ public class Queries {
 	public static String GiveAccess = "insert into Application_User_Mapper (App_Application_ID, App_user_Reg_ID) values (?,?)";
 	public static String getrequestForAdmin = "(select b.Request_ID, b.Request_App_Name, a.Reg_UserName, a.Reg_Email, (select Reg_F_Name+' '+Reg_L_Name+' as '+Reg_UserName from User_Registration where Reg_UserID = b.Request_App_ApprovedBy_Reg_UserID), b.Request_Status from Application_Request_Mapper b left join User_Registration a on a.Reg_UserID=b.Request_App_By_Reg_UserID) order by b.Request_Status desc";
 	public static String addApplicationForAdmin = "insert into Application_Master (Application_Name, Application_Reg_Admin_UserID, Application_CreationTime) values (?,?,?)";
+	public static String editApplicationForAdmin(int appId, String appName) {
+		String s = "update Application_Master set Application_Name='"+appName+"' where Application_ID="+appId;
+		return s;
+	}
+	public static String deleteApplicationForAdmin(int appId) {
+		String s = "update Application_Master set Application_ID_Flag=0 where Application_ID="+appId;
+		return s;
+	}
+	public static String retriveApplicationForAdmin(int appId) {
+		String s = "update Application_Master set Application_ID_Flag=1 where Application_ID="+appId;
+		return s;
+	}
+	
 	public static String checkIfAPPExistsForAdmin = "select * from Application_Master";
 	public static String listAppForAdmin = "select a.Application_ID, a.Application_Name, b.Reg_F_Name+' '+b.Reg_L_Name+ ' as ' + b.Reg_UserName, a.Application_CreationTime, a.Application_ID_Flag from Application_Master a left join User_Registration b on a.Application_Reg_Admin_UserID=b.Reg_UserID";
 	public static String listAllUsersForAdmin = "select * from User_Registration";
@@ -171,4 +184,5 @@ public class Queries {
 		String s = "update User_Registration set Reg_User_Type='"+ sts +"' where Reg_UserID="+ uid;
 		return s;
 	}
+	
 }

@@ -1,7 +1,4 @@
 <jsp:include page="Contents/AdminHeaderContent.jsp" />
- <script type="text/javascript" src="resources/js/jquery.vmap.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/css/jqvmap.css"/>
-
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -34,12 +31,53 @@ $(document).ready(function() {
  	   //location.reload();
      });
     
+ // Remove Application
+    $('#adminapptable tbody').on('click', '.xxx', function () {
+    	var apID = _activeId;
+    	
+    	$.get('../AdminDeleteApplication', {
+           	 a: apID, 
+            }, function(response) {
+            	alert("Application is Deactivated");
+            	//$('#example').DataTable().ajax.reload(null, false);
+            });
+    });
+ 
+ // Remove Admin
+    $('#adminapptable tbody').on('click', '.yyy', function () {
+    	var apID = _activeId;
+    	alert("BOOM");
+    	
+    	$.get('../AdminRetriveApplicationController', {
+           	 a: apID, 
+            }, function(response) {
+            	alert("Admin is Removed");
+            	//$('#example').DataTable().ajax.reload(null, false);
+            });
+    });
 } );
 
 function loadtable(){
 	
 }
 
+</script>
+<script>
+var _nextId = 1;
+var _activeId = 0;
+var _row = null;
+
+</script>
+<script>
+
+function opener(ctl){
+	_row = $(ctl).parents("tr"); 
+	var cols = _row.children("td");	 
+	 var x = ctl.parentNode.parentNode.rowIndex;
+	 var tab = document.getElementById('adminapptable');
+	 _activeId = tab.rows[x].cells[0].innerHTML;
+	 console.log(_activeId);
+}
 </script>
 <p class="home"><a href="#">Home</a> > <strong> Add Applications</strong></p>
 <br>
@@ -52,7 +90,7 @@ function loadtable(){
   <button type="submit" id="apper" class="btn btn-primary">Submit Your Application</button>
 </form>
 <br>
-<table id="adminapptable" class="display" style="width:100%; height:700px">
+<table id="adminapptable" class="display p" style="width:100%; height:700px">
         <thead>
             <tr>
             	<th>Application ID</th>
@@ -82,11 +120,11 @@ function loadtable(){
                 	String y = (resultset.getInt(5) > 0) ? "Active" : "Inactive";
                 	if(y.equals("Active")){
                 %>
-                <td><button type='button' onClick='opener(this);' id='opener' class='btn btn-warning'>Edit AppName <i class="fas fa-edit"></i></button> &nbsp&nbsp <button type='button' id='sure' class='btn btn-danger'>Delete Application <i class="fas fa-trash-alt"></i></button></td>
+                <td><button type='button' onClick='opener(this);' id='opener' class='btn btn-warning'>Edit AppName <i class="fas fa-edit"></i></button> &nbsp&nbsp <button type='button' id='sure' onClick='opener(this);' class='btn btn-danger xxx'>Delete Application <i class="fas fa-trash-alt"></i></button></td>
 				<%
                 	}else{
             	%>
-            	<td><button type='button' onClick='opener(this);' id='opener' class='btn btn-warning'>Edit AppName <i class="fas fa-edit"></i></button> &nbsp&nbsp <button type='button' id='sures' class='btn btn-danger'>Reactive Application <i class="fas fa-trash-alt"></i></button></td>
+            	<td><button type='button' onClick='opener(this);' id='opener' class='btn btn-warning'>Edit AppName <i class="fas fa-edit"></i></button> &nbsp&nbsp <button type='button' id='sures' onClick='opener(this);' class='btn btn-danger yyy'>Reactive Application <i class="fas fa-trash-alt"></i></button></td>
             	<%
                 	}
             	%>            
