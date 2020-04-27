@@ -167,4 +167,8 @@ public class Queries {
 	public static String checkIfAPPExistsForAdmin = "select * from Application_Master";
 	public static String listAppForAdmin = "select a.Application_ID, a.Application_Name, b.Reg_F_Name+' '+b.Reg_L_Name+ ' as ' + b.Reg_UserName, a.Application_CreationTime, a.Application_ID_Flag from Application_Master a left join User_Registration b on a.Application_Reg_Admin_UserID=b.Reg_UserID";
 	public static String listAllUsersForAdmin = "select * from User_Registration";
+	public static String AdminMakesAdmin(int uid, String sts) {
+		String s = "update User_Registration set Reg_User_Type='"+ sts +"' where Reg_UserID="+ uid;
+		return s;
+	}
 }
