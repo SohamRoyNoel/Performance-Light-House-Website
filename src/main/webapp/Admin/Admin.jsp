@@ -100,7 +100,9 @@
 </div> 
 
 		</div>
-		<div class="clearfix"></div>
+		<div class="clearfix">
+		jhfjhf
+		</div>
 	</div>
 	<div class="footer">
 			<div class="copyright text-center">

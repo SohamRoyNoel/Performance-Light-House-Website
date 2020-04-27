@@ -7,17 +7,18 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
-<p class="home"><a href="#">Home</a> > <strong> All Users</strong></p>
+<p class="home"><a href="#">Home</a> > <strong> Remove User</strong></p>
 <br>
 
 <table id="example" class="display" style="width:100%; height:700px">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>User Name</th>
-                <th>Application Access</th>
-                <th>Active TestCases</th>
-                <th>Start date</th>
+            	<th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Remove User</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@ $(document).ready(function() {
                 <td>Edinburgh</td>
                 <td>61</td>
                 <td>2011/04/25</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Garrett Winters</td>
@@ -34,6 +36,7 @@ $(document).ready(function() {
                 <td>Tokyo</td>
                 <td>63</td>
                 <td>2011/07/25</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Ashton Cox</td>
@@ -41,6 +44,7 @@ $(document).ready(function() {
                 <td>San Francisco</td>
                 <td>66</td>
                 <td>2009/01/12</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Cedric Kelly</td>
@@ -48,6 +52,7 @@ $(document).ready(function() {
                 <td>Edinburgh</td>
                 <td>22</td>
                 <td>2012/03/29</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Airi Satou</td>
@@ -55,6 +60,7 @@ $(document).ready(function() {
                 <td>Tokyo</td>
                 <td>33</td>
                 <td>2008/11/28</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Brielle Williamson</td>
@@ -62,6 +68,7 @@ $(document).ready(function() {
                 <td>New York</td>
                 <td>61</td>
                 <td>2012/12/02</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Herrod Chandler</td>
@@ -69,6 +76,7 @@ $(document).ready(function() {
                 <td>San Francisco</td>
                 <td>59</td>
                 <td>2012/08/06</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Rhona Davidson</td>
@@ -76,6 +84,7 @@ $(document).ready(function() {
                 <td>Tokyo</td>
                 <td>55</td>
                 <td>2010/10/14</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Colleen Hurst</td>
@@ -83,6 +92,7 @@ $(document).ready(function() {
                 <td>San Francisco</td>
                 <td>39</td>
                 <td>2009/09/15</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Sonya Frost</td>
@@ -90,6 +100,7 @@ $(document).ready(function() {
                 <td>Edinburgh</td>
                 <td>23</td>
                 <td>2008/12/13</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Jena Gaines</td>
@@ -97,6 +108,7 @@ $(document).ready(function() {
                 <td>London</td>
                 <td>30</td>
                 <td>2008/12/19</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Quinn Flynn</td>
@@ -104,6 +116,7 @@ $(document).ready(function() {
                 <td>Edinburgh</td>
                 <td>22</td>
                 <td>2013/03/03</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Charde Marshall</td>
@@ -111,6 +124,7 @@ $(document).ready(function() {
                 <td>San Francisco</td>
                 <td>36</td>
                 <td>2008/10/16</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Haley Kennedy</td>
@@ -118,6 +132,7 @@ $(document).ready(function() {
                 <td>London</td>
                 <td>43</td>
                 <td>2012/12/18</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             <tr>
                 <td>Tatyana Fitzpatrick</td>
@@ -125,6 +140,7 @@ $(document).ready(function() {
                 <td>London</td>
                 <td>19</td>
                 <td>2010/03/17</td>
+                <td><button type='button' id='sure' class='btn btn-danger'>Remove Users<i class="fas fa-user-times"></i></button></td>
             </tr>
             
         </tbody>
@@ -135,6 +151,9 @@ $(document).ready(function() {
                 <th>Office</th>
                 <th>Age</th>
                 <th>Start date</th>
+                <th>Salary</th>
             </tr>
         </tfoot>
     </table>
+    </body>
+    </html>

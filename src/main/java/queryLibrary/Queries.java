@@ -166,4 +166,5 @@ public class Queries {
 	public static String addApplicationForAdmin = "insert into Application_Master (Application_Name, Application_Reg_Admin_UserID, Application_CreationTime) values (?,?,?)";
 	public static String checkIfAPPExistsForAdmin = "select * from Application_Master";
 	public static String listAppForAdmin = "select a.Application_ID, a.Application_Name, b.Reg_F_Name+' '+b.Reg_L_Name+ ' as ' + b.Reg_UserName, a.Application_CreationTime, a.Application_ID_Flag from Application_Master a left join User_Registration b on a.Application_Reg_Admin_UserID=b.Reg_UserID";
+	public static String listAllUsersForAdmin = "select * from User_Registration";
 }

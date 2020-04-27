@@ -86,7 +86,6 @@
                   <li id="header_notification_bar" class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                      <i class="fa fa-bell-o"></i>
-                     <span class="badge bg-warning">7</span>
                      </a>
                   </li>
                   <!-- notification dropdown end -->
