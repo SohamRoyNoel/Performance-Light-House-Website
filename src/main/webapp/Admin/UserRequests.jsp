@@ -24,7 +24,7 @@ $(document).ready(function() {
 	       	 a: apID, b:apName, c:apUserName, d:apEmail,
 	        }, function(response) {
 	        	alert("Access is Granted");
-	        	$('#example').DataTable().ajax.reload();
+	        	//$('#example').DataTable().ajax.reload(null, false);
 	        });
 	});
  
@@ -39,7 +39,7 @@ $(document).ready(function() {
 			a: apID, b:apName, c:apUserName, d:apEmail,
 	        }, function(response) {
 	        	alert("You have Rejected the request"); 
-	        	$('.p').DataTable().ajax.reload();
+	        	//$('.p').DataTable().ajax.reload(null, false);
 	        	// var url = 'UserRequests.jsp';
 	        	 //$('#example').load(url + ' #example');
 	        });
@@ -125,14 +125,6 @@ function opener(ctl){
             
         </tbody>
         <tfoot>
-            <tr>
-                <th>ID</th>
-                <th>Application Name</th>
-                <th>Asked By</th>
-                <th>Asked By Email</th>
-                <th>Approved By</th>
-                <th>Status</th>
-                <th>Grant Access Or Revoke Access Access</th>
-            </tr>
+            
         </tfoot>
     </table>

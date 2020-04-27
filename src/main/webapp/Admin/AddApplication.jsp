@@ -1,5 +1,8 @@
 <jsp:include page="Contents/AdminHeaderContent.jsp" />
- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+ <script type="text/javascript" src="resources/js/jquery.vmap.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/jqvmap.css"/>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <%@page import="queryLibrary.Queries"%>
@@ -9,9 +12,9 @@
 <%
    ResultSet resultset = null;
    %>
-<script>
+ <script>
 $(document).ready(function() {
-    $('#example').DataTable();
+    $('#adminapptable').DataTable();
     
     $('#apper').click(function(event) {
  	    var ap = $("input#exampleInputEmail1").val();
@@ -21,14 +24,22 @@ $(document).ready(function() {
 			 $.get('../AdminAddAppController', {
 	 	            apNM : ap,
 	 	    }, function(response) {
+	 	        
 	 	    	alert($('#pqId').val());
-	 	    	$("input[type='hidden']").remove();
+	 	    	//res.send(browserRefresh('index.html'));
+	 	    	//$("input[type='hidden']").remove();
+	 	    	//alert("Application Added");
 	 	    });
 		}
- 	   
+ 	   //location.reload();
      });
     
 } );
+
+function loadtable(){
+	
+}
+
 </script>
 <p class="home"><a href="#">Home</a> > <strong> Add Applications</strong></p>
 <br>
@@ -41,7 +52,7 @@ $(document).ready(function() {
   <button type="submit" id="apper" class="btn btn-primary">Submit Your Application</button>
 </form>
 <br>
-<table id="example" class="display" style="width:100%; height:700px">
+<table id="adminapptable" class="display" style="width:100%; height:700px">
         <thead>
             <tr>
             	<th>Application ID</th>

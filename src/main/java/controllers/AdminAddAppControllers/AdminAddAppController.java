@@ -78,6 +78,8 @@ public class AdminAddAppController extends HttpServlet {
 					preparedStatement1.setInt(2, intUID);
 					preparedStatement1.executeUpdate();
 				}
+				String ad = "Application Added Successfully";
+				out.write("<input type='hidden' id='pqId' value='"+ad+"'/>");
 				
 			}else {
 				String ad = "Application Already Exists";

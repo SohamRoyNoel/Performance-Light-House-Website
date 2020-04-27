@@ -148,6 +148,12 @@
   	<description></description>
   	<servlet-class>controllers.AdminAddAppControllers.AdminAddAppController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>LogoutController</servlet-name>
+  	<display-name>LogoutController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.middlewareControllers.LogoutController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -244,6 +250,10 @@
   <servlet-mapping>
   	<servlet-name>AdminAddAppController</servlet-name>
   	<url-pattern>/AdminAddAppController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LogoutController</servlet-name>
+  	<url-pattern>/LogoutController</url-pattern>
   </servlet-mapping>
   
 </web-app>

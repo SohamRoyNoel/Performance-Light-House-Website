@@ -1,5 +1,13 @@
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="queryLibrary.Queries"%>
+<%@page import="connectionFactory.Connections"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*"%>
+<%
+   ResultSet resultset = null;
+   %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +37,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {  
+	
+	$('#lgout').click(function(event) {
+		$.get('../LogoutController', {
+
+		}, function(response) {
+			alert("HOW LOW");
+			pageRedirect();
+        });
+	});
+	
+});
+
+function pageRedirect() {
+    window.location.replace("http://localhost:8085/PerformanceWebFramework/Login.jsp");
+}  
+</script>
 
 </head>
 <body>
@@ -95,7 +122,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="home-strip">
 				
 				<div class="member" style="float: right;">
-					<p><a href="#"><i class="men"></i></a><a href="#">Username</a></p>
+				<%
+					try{
+						Connection connection = Connections.getConnection();
+			         	Statement statement = connection.createStatement();
+			         	HttpSession sessions=request.getSession(false);  
+			    		String userID=(String)sessions.getAttribute("LoginID");
+			    		int intUID = Integer.parseInt(userID);
+			    		String uname = "";
+			         	resultset = statement.executeQuery(Queries.authenticateUserName(intUID));
+			         	while (resultset.next()) {
+			         		if(resultset.getString(10).equals("Admin")){
+			         			uname = resultset.getString(2)+" "+ resultset.getString(3);
+			         		}
+			         	}
+					
+				%>
+					<p><a href="#"><i class="men"></i></a><a href="#"><%=uname %></a>&nbsp&nbsp<button type="submit" id="lgout" class="btn btn-danger"><i class="fas fa-sign-out-alt fa-1x"></i></button></p>
+					<%
+			         	}catch(Exception e){
+							e.printStackTrace();
+						}
+					%>
 					
 			<!-----end-wrapper-dropdown-2---->
 			<br>
