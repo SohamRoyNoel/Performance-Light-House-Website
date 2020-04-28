@@ -178,6 +178,12 @@
   	<description></description>
   	<servlet-class>controllers.AdminAddAppControllers.AdminRetriveApplicationController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>AdminEditApplication</servlet-name>
+  	<display-name>AdminEditApplication</display-name>
+  	<description></description>
+  	<servlet-class>controllers.AdminAddAppControllers.AdminEditApplication</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -294,6 +300,10 @@
   <servlet-mapping>
   	<servlet-name>AdminRetriveApplicationController</servlet-name>
   	<url-pattern>/AdminRetriveApplicationController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AdminEditApplication</servlet-name>
+  	<url-pattern>/AdminEditApplication</url-pattern>
   </servlet-mapping>
   
 </web-app>

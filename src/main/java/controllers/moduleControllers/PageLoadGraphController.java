@@ -30,6 +30,11 @@ public class PageLoadGraphController extends HttpServlet {
 		String testCsNO = request.getParameter("tcNo");
 		String dtStart = request.getParameter("dts");
 		String dtEnd = request.getParameter("dte");
+		
+		String flagAll = request.getParameter("flag");
+		String askAVGloadtime="";
+		String askMAXloadtime="";
+		String askMINloadtime="";
 
 		String jsonx = null;
 		Connection cn = null;
@@ -40,12 +45,20 @@ public class PageLoadGraphController extends HttpServlet {
 		Map<String, String> mps = new HashMap<String, String>();
 
 		// Navigation Graph Query
-		String askAVGloadtime = Queries.askAveragePageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
-		String askMAXloadtime = Queries.askMaximumPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
-		String askMINloadtime = Queries.askMinimumPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
-		System.out.println("AVG : "+askAVGloadtime);
-		System.out.println("Max : "+askMAXloadtime);
-		System.out.println("Min : "+askMINloadtime);
+		
+		if (flagAll.contentEquals("ALL")) {
+			askAVGloadtime = Queries.askAverageAllPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+			askMAXloadtime = Queries.askMaximumAllPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+			askMINloadtime = Queries.askMinimumAllPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+		}else {
+			askAVGloadtime = Queries.askAveragePageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+			askMAXloadtime = Queries.askMaximumPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+			askMINloadtime = Queries.askMinimumPageLoad(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+		}
+//		System.out.println("Avg Query : " + askAVGloadtime);
+//		System.out.println("Max Query : " + askMAXloadtime);
+//		System.out.println("Min Query : " + askMINloadtime);
+		
 		
 		// System.out.println("query : " + askNavigation);
 		try {
@@ -58,7 +71,7 @@ public class PageLoadGraphController extends HttpServlet {
 			rs2 = st.executeQuery(askMINloadtime);
 			while(rs2.next()) { mps.put("Nav_MIN_UnloadEvent", rs2.getString(1));}
 			jsonx = new Gson().toJson(mps);
-			System.out.println("Load Json : " + jsonx);
+//			System.out.println("Load Json : " + jsonx);
 
 			response.setContentType("application/json");
 			response.getWriter().write(jsonx);

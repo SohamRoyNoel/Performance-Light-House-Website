@@ -1,54 +1,42 @@
-package controllers.dropdownControllers;
+package controllers.AdminAddAppControllers;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import connectionFactory.Connections;
 import queryLibrary.Queries;
 
-public class PageController extends HttpServlet {
+public class AdminEditApplication extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public PageController() {
+ 
+    public AdminEditApplication() {
         super();
+        // TODO Auto-generated constructor stub
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String applicationName = request.getParameter("ApplicationName");
-    	int intApID = Integer.parseInt(applicationName);
-        String jsonx = null;
+    	System.out.println("Hitlar");
+    	String appId = request.getParameter("a");
+    	int intAppID = Integer.parseInt(appId);
         Connection cn = null;
         Statement st = null;
         ResultSet rs = null;
-        Map<Integer, String> mps = new HashMap<Integer, String>();
-        int z = 0;
-        
-        String askapplication = Queries.askPageName(intApID);
+        String stss = "User";
+        String askapplication = Queries.deleteApplicationForAdmin(intAppID);
+        System.out.println(askapplication);
         
         try {
-			cn = Connections.getConnection();
-			st = cn.createStatement();
-			rs = st.executeQuery(askapplication);
-			while(rs.next()) {
-				mps.put(rs.getInt(1), rs.getString(2));
-				z++;
-			}
-			mps.put(z+1, "ALL");
-			jsonx = new Gson().toJson(mps);
-			
-			response.setContentType("application/json");
-            response.getWriter().write(jsonx);
+        	cn = Connections.getConnection();
+        	Statement sts = cn.createStatement();
+			sts.executeUpdate(askapplication);
+						
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,10 +45,12 @@ public class PageController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 processRequest(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 processRequest(request, response);
+
 	}
 
 }

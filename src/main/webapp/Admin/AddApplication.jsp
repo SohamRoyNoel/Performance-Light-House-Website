@@ -43,7 +43,7 @@ $(document).ready(function() {
             });
     });
  
- // Remove Admin
+ // Retrive Application
     $('#adminapptable tbody').on('click', '.yyy', function () {
     	var apID = _activeId;
     	alert("BOOM");
@@ -51,7 +51,23 @@ $(document).ready(function() {
     	$.get('../AdminRetriveApplicationController', {
            	 a: apID, 
             }, function(response) {
-            	alert("Admin is Removed");
+            	alert("Application is Reactivated");
+            	//$('#example').DataTable().ajax.reload(null, false);
+            });
+    });
+ 
+    // Edit Application
+    $('#adminapptable tbody').on('click', '.zzz', function () {
+    	var apID = _activeId;
+    	var apName = document.getElementById("adminapptable tbody psp").value;
+    	//var apNM = _activeAP;
+    	//var x= apNM.substring(47, apNM.length-4);
+    	alert("BOOMs" + apID + " " + apName);
+    	 
+    	$.get('../AdminEditApplication', {
+           	 a: apID, b : x,
+            }, function(response) {
+            	alert("Admin Name is Changed");
             	//$('#example').DataTable().ajax.reload(null, false);
             });
     });
@@ -62,9 +78,32 @@ function loadtable(){
 }
 
 </script>
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Update Your TestCase Name and Application Name</h4>
+      </div>
+      <div class="modal-body mx-3">
+        
+        <div class="md-form mb-4">
+          <input type="text" id="t" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">Testcase Name</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button id="s" class="btn btn-success">Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 var _nextId = 1;
 var _activeId = 0;
+var _activeAP = 0;
 var _row = null;
 
 </script>
@@ -76,6 +115,7 @@ function opener(ctl){
 	 var x = ctl.parentNode.parentNode.rowIndex;
 	 var tab = document.getElementById('adminapptable');
 	 _activeId = tab.rows[x].cells[0].innerHTML;
+	 _activeAP = tab.rows[x].cells[1].innerHTML;
 	 console.log(_activeId);
 }
 </script>
@@ -112,7 +152,7 @@ function opener(ctl){
 	    %>
             <tr>
                 <td><%=resultset.getInt(1) %></td>
-                <td><%=resultset.getString(2) %></td>
+                <td><input type="text" id="psp" class="form-control" value="<%=resultset.getString(2) %>">  </td>
                 <td><%=resultset.getString(3) %></td>
                 <td><%=resultset.getString(4) %></td>
                 <td><%=(resultset.getInt(5) > 0) ? "Active" : "Inactive" %></td>
@@ -120,7 +160,7 @@ function opener(ctl){
                 	String y = (resultset.getInt(5) > 0) ? "Active" : "Inactive";
                 	if(y.equals("Active")){
                 %>
-                <td><button type='button' onClick='opener(this);' id='opener' class='btn btn-warning'>Edit AppName <i class="fas fa-edit"></i></button> &nbsp&nbsp <button type='button' id='sure' onClick='opener(this);' class='btn btn-danger xxx'>Delete Application <i class="fas fa-trash-alt"></i></button></td>
+                <td><button type='button' onClick='opener(this);' id='opener' class='btn btn-warning zzz'>Edit AppName <i class="fas fa-edit"></i></button> &nbsp&nbsp <button type='button' id='sure' onClick='opener(this);' class='btn btn-danger xxx'>Delete Application <i class="fas fa-trash-alt"></i></button></td>
 				<%
                 	}else{
             	%>

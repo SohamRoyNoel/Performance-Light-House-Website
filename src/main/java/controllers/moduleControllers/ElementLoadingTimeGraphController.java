@@ -19,21 +19,23 @@ import queryLibrary.Queries;
 
 public class ElementLoadingTimeGraphController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
- 
-    public ElementLoadingTimeGraphController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	public ElementLoadingTimeGraphController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String applicationNo = request.getParameter("appNM");
-		int appID = Integer.parseInt(applicationNo);
+		//int appID = Integer.parseInt(applicationNo);
 		String pageNO = request.getParameter("pgNo");
-		int pgID = Integer.parseInt(pageNO);
+		//int pgID = Integer.parseInt(pageNO);
 		String testCsNO = request.getParameter("tcNo");
-		int tsID = Integer.parseInt(testCsNO);
+		//int tsID = Integer.parseInt(testCsNO);
 		String dtStart = request.getParameter("dts");
 		String dtEnd = request.getParameter("dte");
+
+		String flagAll = request.getParameter("flag");
 
 		String jsonx = null;
 		Connection cn = null;
@@ -43,13 +45,18 @@ public class ElementLoadingTimeGraphController extends HttpServlet {
 		String askFusion = "select * from Customer";
 		String fuckMe = "";
 		String appendMe = "";
-		
+
 		String SuckMe ="";
 		String fuckingChrist = "";
+		String askNavigation = "";
 
 		// Navigation Graph Query
-		String askNavigation = Queries.askResources(pgID, tsID, appID, dtStart, dtEnd);
-		System.out.println("query : " + askNavigation);
+		if (flagAll.contentEquals("ALL")) {
+			askNavigation = Queries.askAllResources(pageNO, testCsNO, applicationNo, dtStart, dtEnd);
+		}else {
+			askNavigation = Queries.askResources(pageNO, testCsNO, applicationNo, dtStart, dtEnd);
+		}
+		System.out.println("querySSSSSS : " + askNavigation);
 		try {
 			cn = Connections.getConnection();
 			st = cn.createStatement();
@@ -62,39 +69,39 @@ public class ElementLoadingTimeGraphController extends HttpServlet {
 				fuckingChrist += ","+SuckMe;
 
 			}
-			
+
 			String chart = "\"chart\": {"+
-	                "\"theme\": \"fusion\","+
-	                "\"yaxisname\": \"Loading Times (MiliSeconds)\","+
-	                "\"showvalues\": \"1\","+
-	                "\"placeValuesInside\": \"1\","+
-	                "\"rotateValues\": \"1\","+
-	                "\"valueFontColor\": \"#ffffff\","+
-	                "\"numberprefix\": \"\","+
-	                "\"numVisiblePlot\": \"15\","+
-	                "\"showLabels\": \"0\","+
-	                "\"labeldisplay\": \"WRAP\","+
-	                "\"linethickness\": \"3\","+
-	                "\"scrollheight\": \"10\","+
-	                "\"flatScrollBars\": \"1\","+
-	                "\"scrollShowButtons\": \"0\","+
-	                "\"scrollColor\": \"#cccccc\","+
-	                "\"showHoverEffect\": \"1\""+
-	                
+					"\"theme\": \"fusion\","+
+					"\"yaxisname\": \"Loading Times (MiliSeconds)\","+
+					"\"showvalues\": \"1\","+
+					"\"placeValuesInside\": \"1\","+
+					"\"rotateValues\": \"1\","+
+					"\"valueFontColor\": \"#ffffff\","+
+					"\"numberprefix\": \"\","+
+					"\"numVisiblePlot\": \"15\","+
+					"\"showLabels\": \"0\","+
+					"\"labeldisplay\": \"WRAP\","+
+					"\"linethickness\": \"3\","+
+					"\"scrollheight\": \"10\","+
+					"\"flatScrollBars\": \"1\","+
+					"\"scrollShowButtons\": \"0\","+
+					"\"scrollColor\": \"#cccccc\","+
+					"\"showHoverEffect\": \"1\""+
+
 	              "}";
-			
+
 			String modifiedDataset = "\"dataset\": [{\"data\":["+appendMe.substring(1)+"]}]";
 			String modifiedCategories = "\"categories\": [{\"category\":["+fuckingChrist.substring(1)+"]}]";
 			//String modifiedChart = "{type: 'scrollbar2d',renderAt: 'containerss', width: '600',height: '500',dataFormat: 'json',dataSource: { \"chart\": {plottooltext: \"$dataValue Downloads\", theme: \"fusion\"},"+modifiedCategories+","+modifiedDataset+"}}";
 			String modifiedChart = "{"+chart+","+modifiedCategories+","+modifiedDataset+"}";
 			System.out.println("MODIFIED DATA : " + modifiedChart);
-//			String modifiedChart = "{"+modifiedDataset+"}";
+			//			String modifiedChart = "{"+modifiedDataset+"}";
 
 
 			System.out.println(modifiedChart);
 			jsonx = new Gson().toJson(modifiedChart);
-//			response.setContentType("text/json");
-//			response.getWriter().write(modifiedChart);
+			//			response.setContentType("text/json");
+			//			response.getWriter().write(modifiedChart);
 			response.setContentType("text/json");
 			response.getWriter().write(jsonx);
 

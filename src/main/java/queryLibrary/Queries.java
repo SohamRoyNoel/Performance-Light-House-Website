@@ -106,14 +106,23 @@ public class Queries {
 		String s = "select  x.Page_ID, x.Page_Name from Page_Master x right join (select distinct a.Nav_page_ID as PGID from Navigation_Master a left join Application_Master b on b.Application_ID = a.Nav_Application_ID where b.Application_ID="+apId+") y on y.PGID = x.Page_ID";
 		return s;
 	}
-	public static String askTestScenerioName(int pgID) {
-		String s = "select x.TS_ID, x.TS_Name from TestScenario_Master x right join (select distinct a.Nav_TS_ID as NVTS from Navigation_Master a left join Page_Master b on a.Nav_Page_ID=b.Page_ID where b.Page_ID = "+pgID+") y on y.NVTS=x.TS_ID";
+	public static String askTestScenerioName(int pgID, int appId) {
+		String s = "select x.TS_ID, x.TS_Name from TestScenario_Master x right join (select distinct a.Nav_TS_ID as NVTS, a.Nav_Application_ID  from Navigation_Master a left join Page_Master b on a.Nav_Page_ID=b.Page_ID where b.Page_ID = "+pgID+" and a.Nav_Application_ID="+appId+") y on y.NVTS=x.TS_ID;";
 		return s;
 	}
+	public static String astTestScenarioAll(String pgId, int appId) {
+		String s = "select x.TS_ID, x.TS_Name, y.Nav_Application_ID from TestScenario_Master x right join (select distinct a.Nav_TS_ID as NVTS, a.Nav_Application_ID  from Navigation_Master a left join Page_Master b on a.Nav_Page_ID=b.Page_ID where b.Page_ID in ("+pgId+") and a.Nav_Application_ID="+appId+") y on y.NVTS=x.TS_ID;";
+		return s;
+	}
+	
 
 	// Navigation Graph query
 	public static String askNavGraphQuery(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
 		String q = "select AVG(CONVERT(FLOAT,Nav_UnloadEvent)), AVG(CONVERT(FLOAT,Nav_RedirectEvent)), AVG(CONVERT(FLOAT,Nav_AppCache)), AVG(CONVERT(FLOAT,Nav_TTFB)),AVG(CONVERT(FLOAT,Nav_Processing)),AVG(CONVERT(FLOAT,Nav_DomInteractive)),AVG(CONVERT(FLOAT,Nav_DomComplete)),AVG(CONVERT(FLOAT,Nav_ContentLoad)),AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '" + dtStart +"' and '"+dtEnd+"'";
+		return q;
+	}
+	public static String askNavAllGraphQuery(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
+		String q = "select AVG(CONVERT(FLOAT,Nav_UnloadEvent)), AVG(CONVERT(FLOAT,Nav_RedirectEvent)), AVG(CONVERT(FLOAT,Nav_AppCache)), AVG(CONVERT(FLOAT,Nav_TTFB)),AVG(CONVERT(FLOAT,Nav_Processing)),AVG(CONVERT(FLOAT,Nav_DomInteractive)),AVG(CONVERT(FLOAT,Nav_DomComplete)),AVG(CONVERT(FLOAT,Nav_ContentLoad)),AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID in ("+testCsNO+") and Nav_Application_ID = "+applicationNo+" and Nav_Page_ID in ("+pageNO+") and convert(Date,Nav_EntrySyetemTimes) between '" + dtStart +"' and '"+dtEnd+"'";
 		return q;
 	}
 
@@ -122,18 +131,34 @@ public class Queries {
 		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
+	public static String askAverageAllPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
+		String q = "select AVG(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID in ("+ testCsNO+") and Nav_Application_ID="+applicationNo+" and Nav_Page_ID in ("+pageNO+") and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
+		return q;
+	}
 	public static String askMaximumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
 		String q = "select MAX(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
+		return q;
+	}
+	public static String askMaximumAllPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
+		String q = "select MAX(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID in ("+ testCsNO+") and Nav_Application_ID="+applicationNo+" and Nav_Page_ID in ("+pageNO+") and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
 	public static String askMinimumPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
 		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID="+ testCsNO+" and Nav_Application_ID="+applicationNo+" and Nav_Page_ID="+pageNO+" and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
 		return q;
 	}
+	public static String askMinimumAllPageLoad(String applicationNo, String pageNO, String testCsNO,String dtStart,String dtEnd) {
+		String q = "select MIN(CONVERT(FLOAT,Nav_PageLoad)) from [PerformanceDatabase].[dbo].[Navigation_Master] where Nav_TS_ID in("+ testCsNO+") and Nav_Application_ID="+applicationNo+" and Nav_Page_ID in ("+pageNO+") and convert(Date,Nav_EntrySyetemTimes) between '"+dtStart+"' and '"+dtEnd+"'";
+		return q;
+	}
 	
 	// WebElements/ Resources Query
-	public static String askResources(int pgID, int tsID, int appID, String start, String end) {
+	public static String askResources(String pgID, String tsID, String appID, String start, String end) {
 		String s = "select rm.Res_ID, rm.Res_Name, rmh.RS_Res_Duration from Resource_Master rm inner join Resource_Mapper_History rmh on rmh.RS_Res_ID = rm.Res_ID inner join (select Nav_Id as NVIDS from Navigation_Master where Nav_Page_ID="+pgID+" and Nav_TS_ID="+tsID+" and Nav_Application_ID="+appID+" and convert(Date,Nav_EntrySyetemTimes) between '"+ start +"' and '"+end+"') y on y.NVIDS = rmh.RS_Nav_ID";
+		return s;
+	}
+	public static String askAllResources(String pgID, String tsID, String appID, String start, String end) {
+		String s = "select rm.Res_ID, rm.Res_Name, rmh.RS_Res_Duration from Resource_Master rm inner join Resource_Mapper_History rmh on rmh.RS_Res_ID = rm.Res_ID inner join (select Nav_Id as NVIDS from Navigation_Master where Nav_Page_ID in ("+pgID+") and Nav_TS_ID in ("+tsID+") and Nav_Application_ID="+appID+" and convert(Date,Nav_EntrySyetemTimes) between '"+ start +"' and '"+end+"') y on y.NVIDS = rmh.RS_Nav_ID";
 		return s;
 	}
 	

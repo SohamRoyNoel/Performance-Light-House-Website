@@ -27,19 +27,27 @@ public class NavigationGraphController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String applicationNo = request.getParameter("appNM");
 		String pageNO = request.getParameter("pgNo");
-		String testCsNO = request.getParameter("tcNo");
+		String testCsNO = request.getParameter("tcNos");
 		String dtStart = request.getParameter("dts");
 		String dtEnd = request.getParameter("dte");
-
+		
+		String flagAll = request.getParameter("flag");
+//		System.out.println("Flag all : " + flagAll + " "+ testCsNO);
 		String jsonx = null;
 		Connection cn = null;
 		Statement st = null;
 		ResultSet rs = null;
 		Map<String, String> mps = new HashMap<String, String>();
 
+		String askNavigation = "";
+		
 		// Navigation Graph Query
-		String askNavigation = Queries.askNavGraphQuery(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
-		System.out.println("query : " + askNavigation);
+		if (flagAll.contentEquals("ALL")) {
+			askNavigation = Queries.askNavAllGraphQuery(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+		}else {
+			askNavigation = Queries.askNavGraphQuery(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
+		}
+//		System.out.println("queryss : " + askNavigation);
 		try {
 			cn = Connections.getConnection();
 			st = cn.createStatement();

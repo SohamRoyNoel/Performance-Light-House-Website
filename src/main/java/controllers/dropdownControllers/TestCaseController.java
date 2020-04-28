@@ -26,15 +26,30 @@ public class TestCaseController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String pgID = request.getParameter("pgNo");
-    	int intPGID = Integer.parseInt(pgID);
+    	String apID = request.getParameter("apID");
+    	System.out.println("App id : " + pgID);
+    	String type = request.getParameter("pgType");
+    	System.out.println("TYPE : " + type);
+    	int intapID = 0;
+    	int intPGID = 0;
         String jsonx = null;
         Connection cn = null;
         Statement st = null;
         ResultSet rs = null;
         Map<Integer, String> mps = new HashMap<Integer, String>();
+        String askTestCase = null;
         
-        String askTestCase = Queries.askTestScenerioName(intPGID);
+        if (type.contentEquals("ALL")) {
+        	
+        	intapID = Integer.parseInt(apID);
+        	askTestCase= Queries.astTestScenarioAll(pgID, intapID);
+		}else {
+			intapID = Integer.parseInt(apID);
+	    	intPGID = Integer.parseInt(pgID);
+	        askTestCase = Queries.askTestScenerioName(intPGID, intapID);
+		}
         
+        System.err.println("query : "+ askTestCase);
         try {
 			cn = Connections.getConnection();
 			st = cn.createStatement();

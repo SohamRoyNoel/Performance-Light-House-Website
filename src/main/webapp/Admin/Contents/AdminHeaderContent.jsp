@@ -28,7 +28,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--webfont-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	
 	 <link href="css/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
