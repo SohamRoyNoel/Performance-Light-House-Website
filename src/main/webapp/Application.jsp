@@ -42,7 +42,7 @@ $(document).ready(function() {
 	
 	 // Add Test Case Controller
 	 $('#tcsm').click(function(event) {
-		 var aNO = $("select#apps").val();
+		 var aNO = $("select#app").val();
 		 var TcName= $("input#tcnm").val(); 
 		 
 		 if (TcName != '') {
@@ -176,6 +176,7 @@ var _row = null;
 		<li class=""><a href="FAQ.jsp"> <i class="fa fa-question"></i>
 				<span>FAQ</span>
 		</a></li>
+		
 	</ul>
 	<!-- sidebar menu end-->
 </div>
@@ -244,7 +245,7 @@ var _row = null;
 
 <section id="main-content">
 	<section class="wrapper">
-<br><br>style="height: 40px; width: 300px; float:right"
+<br><br>
 	<!-- Classic tabs -->
 <div id="exTab2" class="">	
 <ul class="nav nav-tabs">
@@ -253,34 +254,13 @@ var _row = null;
 			</li>
 			<li><a href="#2" data-toggle="tab">Test Cases</a>
 			</li>
-			<%
-					try{
-						Connection connection = Connections.getConnection();
-			         	Statement statement = connection.createStatement();
-			         	HttpSession sessions=request.getSession(false);  
-			    		String userID=(String)sessions.getAttribute("LoginID");
-			    		int intUID = Integer.parseInt(userID);
-			    		String apiKEY = "";
-			         	resultset = statement.executeQuery(Queries.authenticateUserName(intUID));
-			         	while (resultset.next()) {
-			         		apiKEY = resultset.getString(7);
-			         	}
-					
-				%>
-			<li><input type="text" readonly  style="height: 40px; width: 300px;" value="<%=apiKEY %>" id="lol"><button type="button" style="height: 40px; width: 60px; float:right" onclick='copy();' id="sp" class="btn btn-outline-primary">Copy</button>
 			
-			</li>
-			<%
-			         	}catch(Exception e){
-							e.printStackTrace();
-						}
-					%>
 		</ul>
 			
 			<div class="tab-content ">
 			  <div class="tab-pane active" id="1">
 			  
-			  <h3>Manage Application : Application View</h3>
+			  <h3>Add Application</h3>
 			  <!-- 1 St part -->
           			<div class="form-group row">
 					  </div>
@@ -352,12 +332,12 @@ var _row = null;
 				});
 			  </script>
 				<div class="tab-pane" id="2">
-          			<h3 style="color:blue">Manage Application : Application View</h3>
+          			<h3 style="color:blue">Add Test Case Single</h3>
 				  <!-- 1 St part -->
 	          			<div class="form-group row">
-	          			<label style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Select An Application Name:</label>
+	          			<label style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Select an Application Name:</label>
 	          			<div class="col-sm-7">
-	          				 <select class="js-example-basic-multiple" style="width: 965px;" id="apps" name="states[]" aria-placeholder="Select Test Case">
+	          				 <select class="js-example-basic-multiple" style="width: 1200px;" id="app" name="states[]" aria-placeholder="Select Test Case">
 	          				 <option value="#" selected disabled>Select Your Application</option> 
 	          				 	<%
 							         try {
@@ -381,9 +361,7 @@ var _row = null;
 				            		%>
                              </select>
                              </div>
-                             <div class="col-sm-2">
-						    	<button type="button" id="xy" class="btn btn-warning">Check Existing Test Cases</button>
-						    </div>
+                             
 						  </div>
 						  <div class="form-group row">
 						    <label for="inputPassword" style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Add A Test Case Name For The Selected Application:</label>
@@ -398,13 +376,40 @@ var _row = null;
 						    <br>
 						 
 						    <div class="col-sm-12">
-						    <h3 style="color:blue">Drag And Drop Application Name And Test Case(.xlsx format only)</h3>
+						    <h3 style="color:blue">Drag And Drop Application Name And Test Case(.xlsx format only) Multiple</h3>
 						    	<form action="UploadFileController" method="POST" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data"></form>
 						    </div>
 						  </div>
 					<!-- /1 St part -->
 					<hr>
-					 <h3 style="color:blue">All Test Cases Related To  </h3>
+					 <h3 style="color:blue">Select Application Name To View Related Test Cases</h3>
+					 <label style="font-size: 16px; color: black;" class="col-sm-3 col-form-label">Select an Application Name:</label>
+	          			<div class="col-sm-7">
+	          				 <select class="js-example-basic-multiple" style="width: 1200px;" id="apps" name="states[]" aria-placeholder="Select Test Case">
+	          				 <option value="#" selected disabled>Select Your Application</option> 
+	          				 	<%
+							         try {
+							        	
+							         	Connection connection = Connections.getConnection();
+							         	Statement statement = connection.createStatement();
+							         	HttpSession sessions=request.getSession(false);  
+										String userID=(String)sessions.getAttribute("LoginID");
+										
+										int UID = Integer.parseInt(userID);
+							         	resultset = statement.executeQuery(Queries.getAllApplications(UID));
+							         	while (resultset.next()) {
+							         %>
+	          				 
+                                   <option value="<%=resultset.getInt(2)%>"><%=resultset.getString(1)%></option>
+                                   <%
+							            }
+							         } catch (Exception e) {
+								         	out.println("wrong entry" + e);
+					        		 }
+				            		%>
+                             </select>
+                             </div>
+                             <br><br>
 					<div>
 					<input type="text" id="myInput11" class="inpt" onkeyup="myFunction()" placeholder="Search by User names.." title="Type in a name">
 					<table style="width:100%; border: none;" class="tab" id="myTable11">

@@ -54,6 +54,14 @@
 <link rel="stylesheet" href="resources/dist/dropzone.css">
 
 </head>
+<%@page import="queryLibrary.Queries"%>
+<%@page import="connectionFactory.Connections"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*"%>
+
+<%
+   ResultSet resultset = null;
+   %>
 <body>
 <section id="container">
 	<!--header start-->
@@ -78,16 +86,45 @@
                   <li id="header_notification_bar" class="dropdown">
                      <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                      <i class="fa fa-bell-o"></i>
-                     <span class="badge bg-warning">7</span>
+                     
                      </a>
                   </li>
                   
                   <!-- notification dropdown end -->
-                  <li id="header_notification_bar" class="dropdown">
-					<a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                     <i class="fa fa-bell-o"></i>
+                  
+                  <li>
+                  <%
+					try{
+						Connection connection = Connections.getConnection();
+			         	Statement statement = connection.createStatement();
+			         	HttpSession sessions=request.getSession(false);  
+			    		String userID=(String)sessions.getAttribute("LoginID");
+			    		if(userID != ""){
+			    		int intUID = Integer.parseInt(userID);
+			    		String apiKEY = "";
+			         	resultset = statement.executeQuery(Queries.authenticateUserName(intUID));
+			         	while (resultset.next()) {
+			         		apiKEY = resultset.getString(7);
+			         	}
+					
+				%>
+			<li id="header_notification_bar" class="">
+			
+				<input type="text" readonly  style="height: 28px; width: 210px; background-color: white; color: #ff0000;" value="<%=apiKEY %>" id="lol"><button type="button" style="height: 29px; width: 40px; float:right" onclick='copy();' id="sp" class="btn btn-primary"><i class="fa fa-files-o" aria-hidden="true"></i></button>
+			</li>
+					<li>&nbsp</li><li>&nbsp</li><li>&nbsp</li><li>&nbsp</li>
+					<li id="header_notification_bar" class="dropdown">
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                     <i class="fa fa-sign-out" aria-hidden="true"></i>
+                     
                      </a>
-                  </li>
+                  </li>  
+                  <%
+			    		}
+			         	}catch(Exception e){
+
+			         	}
+					%>               
                   <!-- notification dropdown end -->
                </ul>
                <!--  notification end -->
