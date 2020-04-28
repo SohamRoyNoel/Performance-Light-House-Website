@@ -62,6 +62,23 @@
 <%
    ResultSet resultset = null;
    %>
+   <script>
+$(document).ready(function() {  
+	
+	$('#lgout').click(function(event) {
+		$.get('LogoutController', {
+
+		}, function(response) {
+			pageRedirect();
+        });
+	});
+	
+});
+
+function pageRedirect() {
+    window.location.replace("http://localhost:8085/PerformanceWebFramework/Login.jsp");
+}  
+</script>
 <body>
 <section id="container">
 	<!--header start-->
@@ -114,10 +131,10 @@
 			</li>
 					<li>&nbsp</li><li>&nbsp</li><li>&nbsp</li><li>&nbsp</li>
 					<li id="header_notification_bar" class="dropdown">
-                     <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                      
-                     </a>
+                     <button type="button" class="btn btn-dark" id="lgout" style="height: 29px; width: 30px;"><center><i class="fa fa-sign-out" aria-hidden="true"></i></center></button>
+                     
+                     
                   </li>  
                   <%
 			    		}

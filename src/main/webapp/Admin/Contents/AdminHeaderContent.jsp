@@ -44,7 +44,6 @@ $(document).ready(function() {
 		$.get('../LogoutController', {
 
 		}, function(response) {
-			alert("HOW LOW");
 			pageRedirect();
         });
 	});
