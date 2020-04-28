@@ -184,6 +184,12 @@
   	<description></description>
   	<servlet-class>controllers.AdminAddAppControllers.AdminEditApplication</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>AllPageLoadGraphController</servlet-name>
+  	<display-name>AllPageLoadGraphController</display-name>
+  	<description></description>
+  	<servlet-class>controllers.moduleControllers.AllPageLoadGraphController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PageController</servlet-name>
   	<url-pattern>/PageController</url-pattern>
@@ -304,6 +310,10 @@
   <servlet-mapping>
   	<servlet-name>AdminEditApplication</servlet-name>
   	<url-pattern>/AdminEditApplication</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AllPageLoadGraphController</servlet-name>
+  	<url-pattern>/AllPageLoadGraphController</url-pattern>
   </servlet-mapping>
   
 </web-app>

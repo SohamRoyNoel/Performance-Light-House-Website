@@ -180,6 +180,30 @@
         		      	    }).render();
         		          });
         			  	    });
+        	          
+        	         // Page Wise Loading Time
+        	            $.get('AllPageLoadGraphController', {
+        						appNM : applicationname, pgNo : xy,tcNo : tcs, dts : dtStart,dte : dtEnd, flag : elemtGraph,
+        			  	    }, function(response) {
+        			  	    //console.log(JSON.parse(response));
+        		      	    	var x = response;
+        		      	    	console.log(x);
+        		      	    	var topStores='';
+        		      	    	FusionCharts.ready(function(x) {
+        		      	    		//var FusionCharts = require('fusioncharts');  
+        		      	    		var xx = x;
+        		      	    		console.log(xx);
+        		      	    		var revenueChart = new FusionCharts({
+        		                      type: 'scrollbar2d',
+        		                      renderAt: 'charter-containers1',
+        		                      width: '600',
+        		                      height: '455',
+        		                      dataFormat: 'json',
+        		                      dataSource: response                   
+        		                      
+        		      	    }).render();
+        		          });
+        			  	    });
                  
              }else{
             	 var testCsNO = $("select#testCases").val().toString();
@@ -257,7 +281,31 @@
     		                      
     		      	    }).render();
     		          });
-    			  	    }); 
+    			  	    });
+    	          
+    	         // Page Wise Loading Time
+    	            $.get('AllPageLoadGraphController', {
+    	            	appNM : applicationname, pgNo : pageNO,tcNo : testCsNO, dts : dtStart,dte : dtEnd, flag : NavGraph,
+    			  	    }, function(response) {
+    			  	    //console.log(JSON.parse(response));
+    		      	    	var x = response;
+    		      	    	console.log(x);
+    		      	    	var topStores='';
+    		      	    	FusionCharts.ready(function(x) {
+    		      	    		//var FusionCharts = require('fusioncharts');  
+    		      	    		var xx = x;
+    		      	    		console.log(xx);
+    		      	    		var revenueChart = new FusionCharts({
+    		                      type: 'scrollbar2d',
+    		                      renderAt: 'charter-containers1',
+    		                      width: '600',
+    		                      height: '455',
+    		                      dataFormat: 'json',
+    		                      dataSource: response                   
+    		                      
+    		      	    }).render();
+    		          });
+    			  	    });
              }
              
              
@@ -462,188 +510,8 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading">Webpage Loading Times</div>
 						<div class="panel-body">
-							<script type="text/javascript">
-                                 FusionCharts.ready(function(){
-                                     var chartObj = new FusionCharts({
-                                   type: 'scrollbar2d',
-                                   renderAt: 'chart-containers',
-                                   width: '600',
-                                   height: '455',
-                                   dataFormat: 'json',
-                                                        bgcolor: 'sky',
-                                   dataSource: {
-                                       "chart": {
-                                           "theme": "fusion",
-                                           "subCaption": "",
-                                           "plottooltext": "$datavalue Miliseconds",
-                                           "YAxisname": "Webpage Loading Time(MiliSeconds)",
-                                           "XAxisname": "",
-                                       },
-                                       "categories": [{
-                                           "category": [{
-                                                   "label": "https://www.google.com/"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/el.js"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/index.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/index1.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/index2.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/indexer.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/indexX.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/dom.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/p.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/json.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/repo.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/mnp.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/abc.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/np.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/mango.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/orange.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/carrot.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/cts.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/tcs.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/NoWork.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/kl.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/ngp.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/pug.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/indexNN.html"
-                                               },
-                                               {
-                                                   "label": "https://www.google.com/Petrol.html"
-                                               }
-                                 
-                                           ]
-                                       }],
-                                       "dataset": [{
-                                           "data": [{
-                                                   "value": "79.4205"
-                                               },
-                                               {
-                                                   "value": "98.2197"
-                                               },
-                                               {
-                                                   "value": "62.4172"
-                                               },
-                                               {
-                                                   "value": "30.18247"
-                                               },
-                                               {
-                                                   "value": "36.5028"
-                                               },
-                                               {
-                                                   "value": "98.4878"
-                                               },
-                                               {
-                                                   "value": "29.1784"
-                                               },
-                                               {
-                                                   "value": "11.733"
-                                               },
-                                               {
-                                                   "value": "12.215"
-                                               },
-                                               {
-                                                   "value": "13.8161"
-                                               },
-                                               {
-                                                   "value": "70.888"
-                                               },
-                                               {
-                                                   "value": "77.519"
-                                               },
-                                               {
-                                                   "value": "69.395"
-                                               },
-                                               {
-                                                   "value": "53.1933"
-                                               },
-                                               {
-                                                   "value": "44.3888"
-                                               },
-                                               {
-                                                   "value": "34.090"
-                                               },
-                                               {
-                                                   "value": "25.5188"
-                                               },
-                                               {
-                                                   "value": "21.761"
-                                               },
-                                               {
-                                                   "value": "21.272"
-                                               },
-                                               {
-                                                   "value": "21.511"
-                                               },
-                                               {
-                                                   "value": "12..1149"
-                                               },
-                                               {
-                                                   "value": "13.996"
-                                               },
-                                               {
-                                                   "value": "12.832"
-                                               },
-                                               {
-                                                   "value": "17.422"
-                                               },
-                                               {
-                                                   "value": "12.206"
-                                               },
-                                 
-                                           ]
-                                       }]
-                                   }
-                                 }
-                                 );
-                                     chartObj.render();
-                                 });
-                              </script>
-							<div id="chart-containers" style="width: 770px; height: 500px;">FusionCharts
+							
+							<div id="charter-containers1" style="width: 770px; height: 500px;">FusionCharts
 								XT will load here!</div>
 						</div>
 					</div>

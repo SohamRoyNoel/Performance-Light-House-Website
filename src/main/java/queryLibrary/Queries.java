@@ -160,6 +160,12 @@ public class Queries {
 		return s;
 	}
 	
+	// Page elements graph query
+	public static String getPageElements(String pgID, String tsID, String appID, String start, String end) {
+		String s = "select a.Page_Name, AVG(CONVERT(FLOAT,b.Nav_PageLoad)) from Page_Master a right join Navigation_Master b on b.Nav_Page_ID=a.Page_ID where b.Nav_Application_ID="+appID+" and b.Nav_Page_ID in ("+pgID+") and b.Nav_TS_ID in ("+tsID+")  and convert(Date,b.Nav_EntrySyetemTimes) between '"+start+"' and '"+end+"' group by a.Page_Name";
+		return s;
+	}
+	
 	/**
 	 ******************************************************************************************************************************************************************************************* 
 	 * 
