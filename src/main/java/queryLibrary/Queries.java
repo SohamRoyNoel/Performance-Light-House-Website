@@ -98,8 +98,6 @@ public class Queries {
 		return r;
 	}
 
-
-
 	// DropDown Queries
 	public static String askApplicationname = "select * from [PerformanceDatabase].[dbo].[Application_Master]";
 	public static String askPageName(int apId) {

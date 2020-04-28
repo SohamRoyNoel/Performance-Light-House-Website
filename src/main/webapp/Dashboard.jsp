@@ -314,7 +314,7 @@
 						<div class="panel-body">
 							<frameset cols="30%, 40%, 30%">
 								
-								<div style="width: 1000px" id="charter-container"></div>
+								<div style="width: 1000px; height: 330px"  id="charter-container" alt="Data Will be loaded here"><p style="text-align: center; vertical-align: middle; line-height: 275px; column-width: 720px;  ">Data will be loaded here</p></div>
 							</frameset>
 						</div>
 					</div>
@@ -684,7 +684,7 @@
                                     chart.draw(data, options);
                                   }
                               </script>
-							<center><div id="columns_div" style="width: 675px; height: 475px;"></div></center>
+							<center><div id="columns_div" style="width: 675px; height: 475px;"><p style="text-align: center; vertical-align: middle; line-height: 410px; column-width: 720px;  ">Data will be loaded here</p></div></center>
 						</div>
 					</div>
 				</td>
