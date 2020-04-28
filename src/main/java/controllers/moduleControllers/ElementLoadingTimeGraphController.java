@@ -42,7 +42,6 @@ public class ElementLoadingTimeGraphController extends HttpServlet {
 		Statement st = null;
 		ResultSet rs = null;
 		Map<String, String> mps = new HashMap<String, String>();
-		String askFusion = "select * from Customer";
 		String fuckMe = "";
 		String appendMe = "";
 
@@ -94,11 +93,11 @@ public class ElementLoadingTimeGraphController extends HttpServlet {
 			String modifiedCategories = "\"categories\": [{\"category\":["+fuckingChrist.substring(1)+"]}]";
 			//String modifiedChart = "{type: 'scrollbar2d',renderAt: 'containerss', width: '600',height: '500',dataFormat: 'json',dataSource: { \"chart\": {plottooltext: \"$dataValue Downloads\", theme: \"fusion\"},"+modifiedCategories+","+modifiedDataset+"}}";
 			String modifiedChart = "{"+chart+","+modifiedCategories+","+modifiedDataset+"}";
-			System.out.println("MODIFIED DATA : " + modifiedChart);
+//			System.out.println("MODIFIED DATA : " + modifiedChart);
 			//			String modifiedChart = "{"+modifiedDataset+"}";
 
 
-			System.out.println(modifiedChart);
+//			System.out.println(modifiedChart);
 			jsonx = new Gson().toJson(modifiedChart);
 			//			response.setContentType("text/json");
 			//			response.getWriter().write(modifiedChart);

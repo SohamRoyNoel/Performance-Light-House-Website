@@ -183,6 +183,8 @@
                  
              }else{
             	 var testCsNO = $("select#testCases").val().toString();
+            	 var testLength = testCsNO.length;
+            	 console.log("Ducking length : "+ testLength)
                  var dtStart = $("input#start").val();
                  var dtEnd = $("input#end").val();
                  

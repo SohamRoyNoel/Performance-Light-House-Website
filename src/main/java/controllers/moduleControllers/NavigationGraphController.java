@@ -47,7 +47,7 @@ public class NavigationGraphController extends HttpServlet {
 		}else {
 			askNavigation = Queries.askNavGraphQuery(applicationNo, pageNO, testCsNO, dtStart, dtEnd);
 		}
-//		System.out.println("queryss : " + askNavigation);
+		System.out.println("queryss : " + askNavigation);
 		try {
 			cn = Connections.getConnection();
 			st = cn.createStatement();
@@ -65,9 +65,9 @@ public class NavigationGraphController extends HttpServlet {
 				// rs.getString(1) + " "+rs.getString(2) + " "+rs.getString(3) + " "+rs.getString(4) + " "+rs.getString(5) + " "+rs.getString(6) + " "+rs.getString(7) + " "+rs.getString(8) + " "+rs.getString(9);
 
 			}
-			System.out.println(mps);
+//			System.out.println(mps);
 			jsonx = new Gson().toJson(mps);
-			System.out.println("json : " + jsonx);
+//			System.out.println("json : " + jsonx);
 
 			response.setContentType("application/json");
 			response.getWriter().write(jsonx);
