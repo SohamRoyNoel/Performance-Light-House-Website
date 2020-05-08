@@ -19,7 +19,7 @@
         	 // get page name
          $('#applicationName').change(function(event) {	
                  var applicationname = $("select#applicationName").val();
-                 console.log(applicationname);
+                 //console.log(applicationname);
 
                  $.get('PageController', {
                 	 ApplicationName : applicationname
@@ -43,7 +43,7 @@
          	   var applicationname = $("select#applicationName").val();
          	   var pagevalue = document.getElementById('page');
          	    var pagevalue1 = pagevalue.options[pageNO-1].text;
-                console.log("PGval : " + pagevalue1);
+                //console.log("PGval : " + pagevalue1);
 
                 var xy=0;
                 var pageIds = null;
@@ -98,19 +98,19 @@
         	 var elemtGraph = 'NO';
              if(pagevalue1 == 'ALL'){
             	 xy = pageList.substring(2, pageList.length-2);
-            	 console.log("Modified : " + xy);
+            	 //console.log("Modified : " + xy);
             	 pageIds = xy.split(',');
             	 NavGraph = 'ALL';
             	 PgGraph = 'ALL';
             	 elemtGraph = 'ALL';
             	 
                 	 var tcs = $("select#testCases").val().toString();
-                	 console.log("yammer : "+ tcs);
+                	 //console.log("yammer : "+ tcs);
                      var dtStart = $("input#start").val();
                      var dtEnd = $("input#end").val();
                      //var pageNOs = pageIds[i];
                      // Navigation
-                             	            	 alert(tcs);
+                             	            	 //alert(tcs);
         	             $.get('NavigationGraphController', {
         					appNM : applicationname, pgNo : xy,tcNos : tcs, dts : dtStart,dte : dtEnd, flag : NavGraph,
         		  	    }, function(response) {
@@ -163,12 +163,12 @@
         			  	    }, function(response) {
         			  	    //console.log(JSON.parse(response));
         		      	    	var x = response;
-        		      	    	console.log(x);
+        		      	    	//console.log(x);
         		      	    	var topStores='';
         		      	    	FusionCharts.ready(function(x) {
         		      	    		//var FusionCharts = require('fusioncharts');  
         		      	    		var xx = x;
-        		      	    		console.log(xx);
+        		      	    		//console.log(xx);
         		      	    		var revenueChart = new FusionCharts({
         		                      type: 'scrollColumn2d',
         		                      renderAt: 'charter-container',
@@ -187,12 +187,12 @@
         			  	    }, function(response) {
         			  	    //console.log(JSON.parse(response));
         		      	    	var x = response;
-        		      	    	console.log(x);
+        		      	    	//console.log(x);
         		      	    	var topStores='';
         		      	    	FusionCharts.ready(function(x) {
         		      	    		//var FusionCharts = require('fusioncharts');  
         		      	    		var xx = x;
-        		      	    		console.log(xx);
+        		      	    		//console.log(xx);
         		      	    		var revenueChart = new FusionCharts({
         		                      type: 'scrollbar2d',
         		                      renderAt: 'charter-containers1',
@@ -208,7 +208,7 @@
              }else{
             	 var testCsNO = $("select#testCases").val().toString();
             	 var testLength = testCsNO.length;
-            	 console.log("Ducking length : "+ testLength)
+            	 //console.log("Ducking length : "+ testLength)
                  var dtStart = $("input#start").val();
                  var dtEnd = $("input#end").val();
                  
@@ -265,12 +265,12 @@
     			  	    }, function(response) {
     			  	    //console.log(JSON.parse(response));
     		      	    	var x = response;
-    		      	    	console.log(x);
+    		      	    	//console.log(x);
     		      	    	var topStores='';
     		      	    	FusionCharts.ready(function(x) {
     		      	    		//var FusionCharts = require('fusioncharts');  
     		      	    		var xx = x;
-    		      	    		console.log(xx);
+    		      	    		//console.log(xx);
     		      	    		var revenueChart = new FusionCharts({
     		                      type: 'scrollColumn2d',
     		                      renderAt: 'charter-container',
@@ -289,12 +289,12 @@
     			  	    }, function(response) {
     			  	    //console.log(JSON.parse(response));
     		      	    	var x = response;
-    		      	    	console.log(x);
+    		      	    	//console.log(x);
     		      	    	var topStores='';
     		      	    	FusionCharts.ready(function(x) {
     		      	    		//var FusionCharts = require('fusioncharts');  
     		      	    		var xx = x;
-    		      	    		console.log(xx);
+    		      	    		//console.log(xx);
     		      	    		var revenueChart = new FusionCharts({
     		                      type: 'scrollbar2d',
     		                      renderAt: 'charter-containers1',
@@ -534,7 +534,7 @@
                                 	 
                                  	var data = new google.visualization.DataTable();
                                  	data.addColumn('string', 'col_name');
-                                 	data.addColumn('number', 'Best');
+                                 	data.addColumn('number', 'Value');
                                  	data.addRows(3);
                                  	data.setCell(0,0,'Best');data.setCell(0,1,minn);
                                  	data.setCell(1,0,'Mean');data.setCell(1,1,avgg);  

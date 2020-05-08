@@ -76,7 +76,7 @@
    %>
 <body>
 	<div class="content">
-		<h1>Welcome To Cognizant Performance LightHouse</h1>
+		<h1>Welcome To JH Performance LightHouse</h1>
 		<div class="main">
 			<div class="profile-left wthree">
 				<div class="sap_tabs">
@@ -174,8 +174,8 @@
 			<div class="clear"></div>
 		</div>
 		<p class="footer">
-			&copy; 2016 Account Login Widget. All Rights Reserved | Design by <a
-				href=""> Soham Roy</a>
+			&copy; 2020 JH Performance Lighthouse. All Rights Reserved | Design by <a
+				href=""> CoP Automation Team</a>
 		</p>
 	</div>
 </body>

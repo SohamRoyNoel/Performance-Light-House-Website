@@ -77,8 +77,8 @@ public class AllPageLoadGraphController extends HttpServlet {
 					"\"rotateValues\": \"1\","+
 					"\"valueFontColor\": \"#ffffff\","+
 					"\"numberprefix\": \"\","+
-					"\"numVisiblePlot\": \"15\","+
-					"\"showLabels\": \"0\","+
+					"\"numVisiblePlot\": \"2\","+
+					"\"showLabels\": \"1\","+
 					"\"labeldisplay\": \"WRAP\","+
 					"\"linethickness\": \"3\","+
 					"\"scrollheight\": \"10\","+

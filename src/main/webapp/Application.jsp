@@ -89,7 +89,7 @@ $(document).ready(function() {
 	 					ed += '</tr>';
 					});
  				$('.tabs').append(ed);
- 				console.log(ed);
+ 				//console.log(ed);
      });
      });
 	
@@ -106,7 +106,7 @@ $(document).ready(function() {
          }, function(response) {
         	 $('body').append('<div style="display:none;">'+response+'</div>');
         	var r = confirm($('#pqIds').val());
-        	console.log("R : " + r);
+        	//console.log("R : " + r);
         	var c = $('#pqIds').val();
         	var x ="It Seems The Test Scenario Has Other Owner. Do You Want To Take Ownership?";
         	var t = "true";
@@ -122,7 +122,7 @@ $(document).ready(function() {
                 	$("#modalLoginForm").modal('hide');
                 });
         	}else{
-            	console.log("llll : ");
+            	//console.log("llll : ");
         	}        	
         	$("input[type='hidden']").remove();
         	$("#modalLoginForm").modal('hide');
@@ -370,14 +370,14 @@ var _row = null;
 							      <input type="text" class="form-control" id="tcnm" placeholder="Test Case Name">
 							    </div>
 							     <div class="col-sm-2">
-							    	<button type="button" style="width:192px" id="tcsm" class="btn btn-warning">Create Test Case</button>
+							    	<button type="button" style="width:200px" id="tcsm" class="btn btn-warning">Create Test Case</button>
 							    </div>
 						    	</form>
 						    <br>
 						 
 						    <div class="col-sm-12">
 						    <h3 style="color:blue">Drag And Drop Application Name And Test Case(.xlsx format only) Multiple</h3>
-						    	<form action="UploadFileController" method="POST" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data"></form>
+						    	<form action="UploadFileController" style="width: 1630px;" method="POST" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data"></form>
 						    </div>
 						  </div>
 					<!-- /1 St part -->
@@ -411,7 +411,7 @@ var _row = null;
                              </div>
                              <br><br>
 					<div>
-					<input type="text" id="myInput11" class="inpt" onkeyup="myFunction()" placeholder="Search by User names.." title="Type in a name">
+					<input type="text" id="myInput11" class="inpt" onkeyup="myFunction()" style="width: 1635px;" placeholder="Search by User names.." title="Type in a name">
 					<table style="width:100%; border: none;" class="tab" id="myTable11">
 					<thead>
 					  <tr>

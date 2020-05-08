@@ -116,7 +116,8 @@ function pageRedirect() {
 			         	Statement statement = connection.createStatement();
 			         	HttpSession sessions=request.getSession(false);  
 			    		String userID=(String)sessions.getAttribute("LoginID");
-			    		if(userID != ""){
+			    		System.out.println("userID : " + userID);
+			    		if(!userID.contentEquals("null")){
 			    		int intUID = Integer.parseInt(userID);
 			    		String apiKEY = "";
 			         	resultset = statement.executeQuery(Queries.authenticateUserName(intUID));
@@ -137,9 +138,18 @@ function pageRedirect() {
                      
                   </li>  
                   <%
+			    		}else{
+			    			System.out.println("Else : ");
 			    		}
 			         	}catch(Exception e){
-
+			         		%>
+				    		
+							<li id="header_notification_bar" class="dropdown">
+		                     <a href="Login.jsp">
+		                     	Login <i class="fa fa-sign-in" aria-hidden="true"></i>
+		                     </a>                     
+		                  </li>  
+					    		<%
 			         	}
 					%>               
                   <!-- notification dropdown end -->
